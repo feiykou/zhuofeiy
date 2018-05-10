@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:70:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\product\add.html";i:1523171602;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1523617509;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:70:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\product\add.html";i:1525923036;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1525923036;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
