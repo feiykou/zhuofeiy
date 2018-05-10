@@ -43,9 +43,6 @@ class Cate extends Model
 
     // 获取全部分类 ，分页
     public function getAllData(){
-        $data = [
-            'status'    => 1,
-        ];
 
         $order = [
             'id' => 'desc'
@@ -60,7 +57,6 @@ class Cate extends Model
     // 获取全部分类  排除自身id
     public function getNormalFirstCate($id=0){
         $data = [
-            'status'    => 1,
             'id'        => ['neq',$id]
         ];
 
