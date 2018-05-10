@@ -16,31 +16,42 @@ class Uploader extends TagLib
     protected $tags = [
         'webuploadercss' => ['attr' => '', 'close' => 0],
         'webuploaderjs'  => ['attr' => '', 'close' => 0],
-        'webuploader'     => ['attr' => 'btnVal', 'close' => 0],
+        'webuploader'     => ['attr' => 'btnVal,uploadId,filePickerId'],
     ];
 
-    public function tagWebuploadercss($tag, $content){
-        $parseStr = '<link href="__RES_ADMIN__/css/webuploader.css" rel="stylesheet">';
+    public function tagWebuploadercss(){
+        $parseStr = '<link href="__STATIC__/admin/lib/webuploader/webuploader.css" rel="stylesheet">';
         return $parseStr;
     }
 
-
-
-    public function tagWebuploaderjs($tag, $content){
-        $parseStr = '<script type="text/javascript" src="__RES_ADMIN__/js/webuploader.js"></script>';
-        $parseStr .= '<script type="text/javascript" src="__RES_ADMIN__/js/uploadNew.js"></script>';
+    /**
+     *  wrap:  图片最外层盒子dom对象
+    filePicker: 添加图片按钮,
+    uploadId: wrap盒子id,
+    server: 上传服务器地址,
+    addImgVal: 添加图片名字,
+    width: 图片缩略图宽度,
+    height: 图片缩略图高度,
+    fileNumLimit: 限制上传图片数量,
+    multiple: 是否多图上传
+     * @return string
+     */
+    public function tagWebuploaderjs($tag,$content){
+        $parseStr = '<script type="text/javascript" src="__STATIC__/admin/lib/webuploader/webuploader.js"></script>';
+        $parseStr .= '<script type="text/javascript" src="__STATIC__/admin/lib/webuploader/feiy_upload.js"></script>';
         return $parseStr;
     }
-
-    public function tagWebuploader($tag){
+    public function tagWebuploader($tag,$content){
         $btnVal = isset($tag['btnVal'])?$tag['btnVal']:'开始上传';
+        $uploadId = isset($tag['uploadId'])?$tag['uploadId']:'uploader';
+
         $parseStr = <<<php
-            <div id="uploader">
+            <div id="$uploadId" class="uploader-item">
                 <div class="uploader_btns">
-                    <div id="filePicker"></div><div class="uploadBtn">$btnVal</div>
+                    <div class="filePicker"></div><div class="uploadBtn">$btnVal</div>
                 </div>
                 <!--用来存放item-->
-                <div class="queueList"></div>
+                <div class="queueList">$content</div>
             </div>
 php;
 

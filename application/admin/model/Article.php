@@ -59,7 +59,7 @@ class Article extends Model
 
 
     public function getAllCateData(){
-        $cateData = ArtCate::alias('a1')
+        $cateData = Cate::alias('a1')
             ->field('a1.*,a2.name as pname')
             ->join('art_cate a2','a1.pid=a2.id','left')
             ->select();

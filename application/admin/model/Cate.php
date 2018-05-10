@@ -12,9 +12,14 @@ namespace app\admin\model;
 use app\lib\exception\CateException;
 use think\Model;
 
-class ArtCate extends Model
+class Cate extends Model
 {
     protected $hidden = ['create_time','update_time','delete_time'];
+
+    public function cate(){
+        return $this->hasOne('cate')->field('name');
+    }
+
     public static function getDeptData($id){
         $model = new self();
         $ModelDatas = $model->select();
@@ -34,5 +39,37 @@ class ArtCate extends Model
             $parentSortDept = sortData($parentDept);
         }
         return $parentSortDept;
+    }
+
+    // 获取全部分类 ，分页
+    public function getAllData(){
+        $data = [
+            'status'    => 1,
+        ];
+
+        $order = [
+            'id' => 'desc'
+        ];
+
+        return db('cate')->where($data)
+            ->order($order)
+            ->paginate();
+
+    }
+
+    // 获取全部分类  排除自身id
+    public function getNormalFirstCate($id=0){
+        $data = [
+            'status'    => 1,
+            'id'        => ['neq',$id]
+        ];
+
+        $order = [
+            'id' => 'desc'
+        ];
+
+        return $this->where($data)
+            ->order($order)
+            ->select();
     }
 }

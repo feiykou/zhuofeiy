@@ -6,14 +6,14 @@
 		var opts = $.extend({},loading.methods,loading.defaults,options);
 		setTimeout(function(){
             opts.init(opts);
-            $("#tm_loading").find("#tm_loading_content").html(opts.content);
+            $("#cd_loading").find("#cd_loading_content").html(opts.content);
 		},opts.delayTime)
 	};
 
 	/*提供一系列的封装方法*/
     loading.methods = {
 		init : function(opts){//初始化
-            var $divBox = $("#tm_loading");
+            var $divBox = $("#cd_loading");
 			var emptyFlag = $divBox.html();
 
 			var timer = null;
@@ -28,13 +28,16 @@
 				opts.$mask = this.mask();
 				//模板追加到body
 				var $box = opts.parentDom || $("body");
-				$box.append($divBox,opts);
+
+				$box.append($divBox);
 				$box.append(opts.$mask);
+
 				//给div定位
 				this._position($divBox,opts);
 				this._resize($divBox,opts);
+
 			}else{
-                $divBox.hide().find("#tm_loading_content").html(opts.content);
+                $divBox.hide().find("#cd_loading_content").html(opts.content);
 				this.hideAnimte($divBox,opts);
 			}
 
@@ -110,7 +113,7 @@
 		delayHide: 1200, //隐藏等待时间
         openFlag :true, //点击隐藏插件
 		content:"数据拼命加载中...",
-		animate:"slow",
+		animate:"fade",
 		parentDom:null,
 		delayTime:450,
 		callback:function($this){

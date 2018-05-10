@@ -16,7 +16,7 @@ Route::get('/','admin/index/index');
 Route::get('/index','admin/index/main');
 Route::get('artlist','admin/article/artlist');
 Route::get('artcon','admin/article/artcon');
-Route::get('cate','admin/article/artcate');
+Route::get('cate','admin/cate/index');
 Route::get('user','admin/user/index');
 Route::get('role','admin/role/index');
 Route::get('rule','admin/auth_rule/index');

@@ -20,6 +20,7 @@ var reqAjaxJson = {
                 opts.modalDom && opts.modalDom.modal('hide');
                 that.funType = that.funArr[data.code]; //返回的是数据状态
                 that.funType && (that.loadOpts = that.method[that.funType](data,opts.redirectP));
+                console.log(that.method[that.funType]);
                 that.loadOpts && kzLoading(that.loadOpts);
             }
         });
@@ -125,7 +126,6 @@ var loadPage = {
                 }
             }
             opts.modalConDom.load(opts.url+param_str,'',function(result){
-                console.log(that.trimBr(result));
                 opts.modalConDom.html(that.trimBr(result));
             });
         });

@@ -8,7 +8,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\ArtCate;
+use app\admin\model\Cate;
 use app\admin\model\Product as ProductModel;
 
 class Product extends Common
@@ -34,7 +34,7 @@ class Product extends Common
 
     // 添加页面
     public function add(){
-        $cateData = ArtCate::all();
+        $cateData = Cate::all();
         $sortArr = sortData($cateData);
         $this->assign('cateArr',$sortArr);
         return $this->fetch();
@@ -80,7 +80,7 @@ class Product extends Common
 
     public function edit(){
         $id = input('param.id');
-        $cateData = ArtCate::all();
+        $cateData = Cate::all();
         $sortArr = sortData($cateData);
         $this->assign('cateArr',$sortArr);
 
