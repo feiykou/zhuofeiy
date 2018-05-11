@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:69:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\cate\index.html";i:1525944405;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1525923036;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:69:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\cate\index.html";i:1526004340;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1525923036;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +131,9 @@
     
 
 <script>
-
+    /*
+    * 添加分类
+    * */
     loadPage.init({
         clickDom:$(".btn-add-cate"),
         modalConDom:$("#add-modal .modal-content"),
@@ -139,7 +141,7 @@
     });
 
     /*
-    * 添加分类
+    * 添加分类提交
     * */
     $("#add-modal").on("click",'.cateAdd-sub',function() {
         reqAjaxJson.init({
@@ -150,18 +152,12 @@
         });
     });
 
-    // 过滤字符串中\r\n和\
-    function trimBr(str) {
-        str=str.replace(/\\r\\n|\\|"/g,"");
-        return str;
-    }
-
     // 点击编辑
-    $(".btn-edit").on("click",function(){
-        var cateid = $(this).data("id");
-        $("#edit-modal .modal-content").load("<?php echo Url('edit'); ?>?id="+cateid,'',function(result){
-            $("#edit-modal .modal-content").html(trimBr(result));
-        });
+    loadPage.init({
+        clickDom:$(".btn-edit"),
+        modalConDom:$("#edit-modal .modal-content"),
+        url: "<?php echo url('edit'); ?>",
+        attrArr: ['id']
     });
 
     // 编辑提交
@@ -184,9 +180,6 @@
         "sureClass": ".cateDel-sub",
         "btnClass": ".btn-del"
     });
-
-
-
 
 </script>
 

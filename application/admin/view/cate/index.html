@@ -91,7 +91,9 @@
 {block name="script"}
 
 <script>
-
+    /*
+    * 添加分类
+    * */
     loadPage.init({
         clickDom:$(".btn-add-cate"),
         modalConDom:$("#add-modal .modal-content"),
@@ -99,7 +101,7 @@
     });
 
     /*
-    * 添加分类
+    * 添加分类提交
     * */
     $("#add-modal").on("click",'.cateAdd-sub',function() {
         reqAjaxJson.init({
@@ -110,18 +112,12 @@
         });
     });
 
-    // 过滤字符串中\r\n和\
-    function trimBr(str) {
-        str=str.replace(/\\r\\n|\\|"/g,"");
-        return str;
-    }
-
     // 点击编辑
-    $(".btn-edit").on("click",function(){
-        var cateid = $(this).data("id");
-        $("#edit-modal .modal-content").load("{:Url('edit')}?id="+cateid,'',function(result){
-            $("#edit-modal .modal-content").html(trimBr(result));
-        });
+    loadPage.init({
+        clickDom:$(".btn-edit"),
+        modalConDom:$("#edit-modal .modal-content"),
+        url: "{:url('edit')}",
+        attrArr: ['id']
     });
 
     // 编辑提交
@@ -144,9 +140,6 @@
         "sureClass": ".cateDel-sub",
         "btnClass": ".btn-del"
     });
-
-
-
 
 </script>
 {/block}

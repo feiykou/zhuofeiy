@@ -110,6 +110,7 @@ var loadPage = {
         str=str.replace(/\\r\\n|\\n|&nbsp;|^"|"$|\\/g,"");
         return str;
     },
+
     init: function (opts) {
         var that = this;
 
