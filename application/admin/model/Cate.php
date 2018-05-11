@@ -16,10 +16,6 @@ class Cate extends Model
 {
     protected $hidden = ['create_time','update_time','delete_time'];
 
-    public function cate(){
-        return $this->hasOne('cate')->field('name');
-    }
-
     public static function getDeptData($id){
         $model = new self();
         $ModelDatas = $model->select();
@@ -43,21 +39,18 @@ class Cate extends Model
 
     // 获取全部分类 ，分页
     public function getAllData(){
-
         $order = [
             'id' => 'desc'
         ];
 
-        return db('cate')->where($data)
-            ->order($order)
-            ->paginate();
-
+        $result = $this->order($order)->select();
+        return $result;
     }
 
     // 获取全部分类  排除自身id
     public function getNormalFirstCate($id=0){
         $data = [
-            'id'        => ['neq',$id]
+            'id' => ['neq',$id]
         ];
 
         $order = [

@@ -17,15 +17,16 @@ use think\Validate;
 
 class BaseValidate extends Validate
 {
-    public function goCheck(){
+    public function goCheck($scene=''){
         //获取http参数并校验
         $request = Request::instance();
         $params = $request->param();
-        $result = $this->batch()->check($params);
+        $result = $this->batch()->scene($scene)->check($params);
         if(!$result){
             throw new ParameterException([
                 'msg' => $this->error
             ]);
+            return false;
         }
         return true;
     }
@@ -42,7 +43,7 @@ class BaseValidate extends Validate
 
     protected function iszeroInteger($value){
         /*
-         * 判断是否是正整数
+         * 判断是否是正整数包含0
          */
         if(is_numeric($value) && is_int($value + 0) && ($value + 0)>=0){
             return true;

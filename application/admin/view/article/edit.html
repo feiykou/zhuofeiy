@@ -5,7 +5,7 @@
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
 <!--引入webuploaderCss-->
-<link rel="stylesheet" href="__RES_ADMIN__/plugins/webuploader/webuploader.css">
+{Uploader:webuploadercss /}
 
 {/block}
 
@@ -18,15 +18,16 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        添加文章
+                        编辑文章
                     </header>
                     <div class="panel-body">
                         <div class="form">
-                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="post" action="{:Url('artAdd')}" enctype="multipart/form-data">
+                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="post" action="{:Url('artEditUpdate',['id'=>$artData.id])}" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="{$artData.id}">
                                 <div class="form-group ">
                                     <label for="art_title" class="control-label col-lg-1">标题</label>
                                     <div class="col-lg-10">
-                                        <input class=" form-control" name="title" type="text" />
+                                        <input class=" form-control" name="name" type="text" value="{$artData.name}" />
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -34,7 +35,7 @@
                                     <div class="col-lg-2">
                                         <select class="form-control" name="category_id">
                                             {volist name='cateArr' id='data'}
-                                            <option value='{$data.id}'>{$data.level | str_repeat='--',###*2} {$data.name}</option>
+                                            <option value='{$data.id}' {if condition="$data.id eq $artData.category_id"} selected="selected"{/if}>{$data.level | str_repeat='--',###*2} {$data.name}</option>
                                             {/volist}
                                         </select>
                                     </div>
@@ -43,34 +44,32 @@
                                 <div class="form-group ">
                                     <label for="art_img_url" class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
-                                        <div class="file-update">
-                                            <div class="file-add">
-                                                <div class="addimg_item">
-                                                    <span class="addimg_line">
-                                                        <i class="line-row"></i>
-                                                        <i class="line-col"></i>
-                                                    </span>
-                                                 </div>
-                                                 <input type="file" name="img_url">
-                                            </div>
-                                            <div class="file-img none">
-                                                <span class="icon-trash del"></span>
-                                            </div>
-                                        </div>
+                                        {Uploader:webuploader btnVal="上传缩略图"}
+                                        <ul class="filelist filelist-exist clearfix">
+                                            {volist name="$imgUrlArr" id="img_url"}
+                                            <li class="item state-complete" data-src="{$img_url.url}" data-img_id="{$img_url.id}">
+                                                <p class="imgWrap"><img src="{$img_url.url}" width="110" height="110"></p>
+                                                <div class="file-panel"><span class="cancel">删除</span></div>
+                                                <span class="success"></span>
+                                            </li>
+                                            {/volist}
+                                        </ul>
+                                        {/Uploader:webuploader}
                                     </div>
                                 </div>
 
                                 <div class="form-group ">
                                     <label for="clickNum" class="control-label col-lg-1">点击数</label>
                                     <div class="col-lg-1">
-                                        <input class=" form-control" id="clickNum" name="click_num" type="text" />
+                                        <input class=" form-control" id="clickNum" name="click_num" type="text" value="{$artData.click_num}" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="editor" class="control-label col-lg-1">文章编辑</label>
                                     <div class="col-lg-10">
                                         <!-- 加载编辑器的容器 -->
-                                        <textarea id="zhuo-container" name="content" type="text/plain" >
+                                        <textarea id="zhuo-container" name="content" type="text/plain" style="width: 100%; height: 350px; overflow-y:auto; ">
+                                            {$artData.content|html_entity_decode}
                                         </textarea>
                                     </div>
                                 </div>
@@ -103,15 +102,35 @@
 <!--<script src="__RES_ADMIN__/js/form-validation-script.js"></script>-->
 
 <!--引入webuploaderJS-->
-<script type="text/javascript" src="__RES_ADMIN__/plugins/webuploader/webuploader.js"></script>
-
+{Uploader:webuploaderjs/}
 
 <!-- 配置文件 -->
-<script type="text/javascript" src="__RES_ADMIN__/plugins/Ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__RES_ADMIN__/lib/Ueditor/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
-<script type="text/javascript" src="__RES_ADMIN__/plugins/Ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="__RES_ADMIN__/lib/Ueditor/ueditor.all.js"></script>
 
 <script type="text/javascript">
+    var config = {
+        "upload_server": "{:url('getSaveNameImg')}",
+    };
+    $(".filelist-exist").parents(".queueList").css({
+        'display': 'block',
+        'opacity': 1
+    });
+    $(".filelist-exist").find("li").hover(function(){
+        $(this).find(".file-panel").stop(true).animate({height:"30px"},300);
+    },function(){
+        $(this).find(".file-panel").stop(true).animate({height:0},300);
+    });
+
+    $(".filelist-exist").on("click","span.cancel",function(){
+        $li = $(this).parents("li");
+        $parents = $li.parents('.filelist-exist');
+        $li.remove();
+        if($parents.find("li").length == 0){
+            $parents.remove();
+        }
+    });
     //注意：设置编辑器属性要在初始化编辑器之前设置，否则无效果
     window.UEDITOR_CONFIG.initialFrameHeight = 560; //设置编辑框的高度
     //设置编辑器高度不自动加高
@@ -135,11 +154,38 @@
             .removeAttr('checked'); // 如果任何radio/checkbox/select inputs有checked or selected 属性，将其移除
     });
 
+    /**
+     *
+     * $childsDom  元素集
+     * attr        属性值
+     * delimiter   分隔符
+     * len         截取个数
+     *
+     **/
+    function setUpdateUrl($childsDom,attr,delimiter,len){
+        var params = "";
+        var index = 0;
+        delimiter = delimiter?delimiter:";"
+        len = len?len:false;
+        for(var i=0;i<$childsDom.length;i++){
+            $li = $childsDom.eq(i);
+            if($li.hasClass("state-complete")){
+                index++;
+                if(len && index>len){
+                    break;
+                }
+                params += $li.data(attr) + delimiter;
+            }
+        }
+        // 删除最后一个分隔符
+        params = params.substring(0,params.length-1);
+        return params;
+    }
+
     $(document).ready(function(){
         $("#signupForm").validate({
             rules: {
-                title: "required",
-                img_url: "required",
+                name: "required",
                 category_id: "required",
                 click_num: {
                     required: true,
@@ -149,78 +195,37 @@
                 content: "required"
             },
             messages: {
-                title: "标题不能为空",
-                img_url: "图片不能为空",
+                name: "标题不能为空",
                 click_num: "点击数必须是正整数并且不能为空",
                 content: "内容不能为空"
             },
             submitHandler: function(form){
-                form.submit();
+                // 获取产品详情页
+                var $img_list_childs = $("#uploader .filelist > li");
+                var imgs_url = setUpdateUrl($img_list_childs,'src','',1);
+                var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
+                params = "&img_url="+imgs_url+"&img_id="+imgs_id;
+                console.log(params);
+                reqAjaxJson.init({
+                    url: "{:Url('save')}",
+                    reqData: $('#signupForm').serialize()+params,
+                    redirectP: "/artlist"
+                });
             }
         });
     });
 
-    /*
-    * 图片上传 - 飞扬
-    *
-    * */
-    var $fileBox = $(".file-update");
-    var $fileDom = $fileBox.find("input[type='file']");
-    var $fileImg = $fileBox.find('.file-img');
-    $fileDom.on("change",function(){
-        run(this,function(result){
-            var $img = new Image();
-            $img.width = 120;
-            $img.height = 120;
-            $img.src = result;
-            $fileImg.append($img);
-            $fileImg.css({
-                "display":'block',
-            });
-        });
-    });
 
-    $(".file-img .del").on("click",function(){
-        var $img = $(this).parent().find("img");
-        if($img){
-            $img.remove();
-        }
-        $fileImg.css({
-            "display":'none',
-        });
-        $fileDom.val("");
+    feiy_upload.init({
+        wrap:$("#uploader"),
+        filePicker: $("#uploader").find(".filePicker"),
+        uploadId: "#uploader",
+        server: config.upload_server,
+        fileNumLimit: 3
     });
 
 
-    /**
-     *
-     * @param input_file   文件按钮对象
-     * @param get_data     转换成功后执行的方法
-     * @returns {boolean}
-     */
-    function run(input_file,get_data){
-        if ( typeof(FileReader) === 'undefined' ){
-            alert("抱歉，你的浏览器不支持 FileReader，不能将图片转换为Base64，请使用现代浏览器操作！");
-        } else {
-            try{
-                /*图片转Base64 核心代码*/
-                var file = input_file.files[0];
-                console.log(file);
-//                var file = input_file;
-                if(!/image\/\w+/.test(file.type)){
-                    alert("请确保文件为图像类型");
-                    return false;
-                }
-                var reader = new FileReader();
-                reader.onload = function(){
-                    get_data(this.result);
-                }
-                reader.readAsDataURL(file);
-            }catch (e){
-                alert('图片转Base64出错啦！'+ e.toString())
-            }
-        }
-    }
+
 </script>
 
 

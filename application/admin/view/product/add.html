@@ -95,7 +95,7 @@
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
-                                        {uploader:webuploader btnVal="上传图片"/}
+                                        {Uploader:webuploader btnVal="上传产品图"}{/Uploader:webuploader}
                                     </div>
                                 </div>
 
@@ -142,11 +142,14 @@
 {uploader:webuploaderjs /}
 
 <!-- 配置文件 -->
-<script type="text/javascript" src="__RES_ADMIN__/plugins/Ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__RES_ADMIN__/lib/Ueditor/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
-<script type="text/javascript" src="__RES_ADMIN__/plugins/Ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="__RES_ADMIN__/lib/Ueditor/ueditor.all.js"></script>
 
 <script type="text/javascript">
+    var config = {
+        "upload_server": "{:url('getSaveNameImg')}",
+    };
     //注意：设置编辑器属性要在初始化编辑器之前设置，否则无效果
     window.UEDITOR_CONFIG.initialFrameHeight = 560; //设置编辑框的高度
     //设置编辑器高度不自动加高
@@ -168,6 +171,43 @@
             .val('')  //将input元素的value设为空值
             .removeAttr('checked')
             .removeAttr('checked'); // 如果任何radio/checkbox/select inputs有checked or selected 属性，将其移除
+    });
+
+
+    /**
+     *
+     * $childsDom  元素集
+     * attr        属性值
+     * delimiter   分隔符
+     * len         截取个数
+     *
+     **/
+    function setUpdateUrl($childsDom,attr,delimiter,len){
+        var params = "";
+        var index = 0;
+        delimiter = delimiter?delimiter:";"
+        len = len?len:false;
+        for(var i=0;i<$childsDom.length;i++){
+            $li = $childsDom.eq(i);
+            if($li.hasClass("state-complete")){
+                index++;
+                if(len && index>len){
+                    break;
+                }
+                params += $li.data(attr) + delimiter;
+            }
+        }
+        // 删除最后一个分隔符
+        params = params.substring(0,params.length-1);
+        return params;
+    }
+
+    feiy_upload.init({
+        wrap:$("#uploader"),
+        filePicker: $("#uploader").find(".filePicker"),
+        uploadId: "#uploader",
+        server: config.upload_server,
+        fileNumLimit: 5
     });
 
 
@@ -199,22 +239,17 @@
                 content: "内容不能为空"
             },
             submitHandler: function(form){
-                // 获取图片地址
-                $filelist_chids = $(".filelist > li");
-                var img_str = "";
-                for(var i=0;i<$filelist_chids.length;i++){
-                    $li = $($filelist_chids).eq(i);
-                    if($li.hasClass("state-complete")){
-                        img_str += $li.data("src") + ";";
-                    }
-                }
-                img_str = "&img_str="+img_str;
+                // 获取产品详情页
+                var $img_list_childs = $("#uploader .filelist > li");
+                var img_str = setUpdateUrl($img_list_childs,'src','',1);
+                var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
+                console.log(imgs_id);
+                params = "&img_str="+img_str+"&img_id="+imgs_id;
                 reqAjaxJson.init({
-                    'url': "{:url('getAddData')}",
-                    'reqData': $("#signupForm").serialize()+img_str,
-                    'redirectP': "{:url('/product')}"
+                    url: "{:Url('save')}",
+                    reqData: $('#signupForm').serialize()+params,
+                    redirectP: "/product"
                 });
-
             }
         });
     });

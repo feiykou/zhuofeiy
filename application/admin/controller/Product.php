@@ -25,7 +25,7 @@ class Product extends Common
             ->where("deleted",'=','1')
             ->field('a1.*,a2.name as pname')
             ->order(['id'=>"desc"])
-            ->join('art_cate a2','a1.art_cate_id=a2.id','left')
+            ->join('cate a2','a1.art_cate_id=a2.id','left')
             ->paginate();
         $page = $proData->render();
         $this->assign('proData',$proData);
@@ -41,40 +41,59 @@ class Product extends Common
     }
 
     // 添加获取数据
-    public function getAddData(){
-        if(request()->isPost()){
-            $product = $this->model;
-            $data = request()->post();
-            $username = session('username','','admin');
-            $proData = [
-                'name'         =>  $data['name'],
-                'art_cate_id'  =>  $data['art_cate_id'],
-                'price'        =>  $data['price'],
-                'stock'        =>  $data['stock'],
-                'summary'      =>  $data['summary'],
-                'content'      =>  $data['content'],
-                'attributes'   =>  $data['attributes'],
-                'status'       =>  $data['status'],
-                'reorder'      =>  empty($data['reorder']) ? '' : $data['reorder'],
-                'publisher'    =>  empty($username) ? 'admin' : $username
-            ];
+    public function save(){
+        if(!request()->post()){
+            $this->error("请求失败");
+        }
 
-            $result = $product->save($proData);
 
-            if($result){
-                // 保存图片到图片表中，并把首图保存在产品表中
-                if(!empty($data['img_str'])){
-                    $imgResult = $product->saveImg($data['img_str'],$product->id);
-                    if($imgResult){
-                        return json(['type'=>'success','success'=>"添加成功！","code"=>0]);
-                    }else{
-                        return json(['type'=>'error','error'=>"添加失败！","code"=>1]);
-                    }
+        $product = $this->model;
+        $data = request()->post();
+        $username = session('username','','admin');
+        $proData = [
+            'name'         =>  $data['name'],
+            'art_cate_id'  =>  $data['art_cate_id'],
+            'price'        =>  $data['price'],
+            'stock'        =>  $data['stock'],
+            'summary'      =>  $data['summary'],
+            'content'      =>  $data['content'],
+            'attributes'   =>  $data['attributes'],
+            'status'       =>  $data['status'],
+            'reorder'      =>  empty($data['reorder']) ? '' : $data['reorder'],
+            'publisher'    =>  empty($username) ? 'admin' : $username
+        ];
+
+
+        $is_exist_id = empty($data['id']);
+        //判断是否存在同名
+        $is_unique = $this->model->is_unique($data['name'],$is_exist_id?0:$data['id']);
+        if($is_unique){
+            return json(['type'=>'exits','exits'=>'存在同名类','code'=>1]);
+        }
+
+        // 更新数据
+        if(!$is_exist_id){
+            $proData['id'] = $data['id'];
+            return $update = $this->update($proData);
+        }
+
+        $result = $product->save($proData);
+
+        if($result){
+            // 保存图片到图片表中，并把首图保存在产品表中
+            if(!empty($data['img_id'])){
+                $imgResult = $product->saveImg($product->id,$data['img_id']);
+                if($imgResult){
+                    return json(['type'=>'success','success'=>"添加成功！","code"=>0]);
+                }else{
+                    return json(['type'=>'error','error'=>"添加失败！","code"=>1]);
                 }
-                return json(['type'=>'success','success'=>"添加成功！","code"=>0]);
             }else{
-                return json(['type'=>'error','error'=>"添加失败！","code"=>1]);
+                return json(['type'=>'success','success'=>"添加失败！","code"=>1]);
             }
+
+        }else{
+            return json(['type'=>'error','error'=>"添加失败！","code"=>1]);
         }
     }
 
@@ -84,14 +103,39 @@ class Product extends Common
         $sortArr = sortData($cateData);
         $this->assign('cateArr',$sortArr);
 
-        $proData = $this->model->getProductDetail($id)->toArray();
+        $proData = $this->model->getProductDetail($id);
+        $imgArr = $this->model->getimgArrByProduct($proData);
         // 推荐位
         $attribute_type = config('attributes.attribute_type');
         return $this->fetch('',[
             'proData'         => $proData,
-            'attribute_type' => $attribute_type
+            'attribute_type' => $attribute_type,
+            'imgArr'  => $imgArr
         ]);
     }
+
+
+    // 更新
+    public function update($data){
+        $result = $this->model->save($data,['id' => intval($data['id'])]);
+        if($result){
+            // 保存图片到图片表中，并把首图保存在产品表中
+            if(!empty($data['img_id'])){
+                $imgResult = $this->modelsaveImg($data['id'],$data['img_id']);
+                if($imgResult){
+                    return json(['type'=>'success','success'=>"更新成功！","code"=>0]);
+                }else{
+                    return json(['type'=>'error','error'=>"更新失败！","code"=>1]);
+                }
+            }else{
+                return json(['type'=>'success','success'=>'更新失败','code'=>1]);
+            }
+        }else{
+            return json(['type'=>'error','error'=>'更新失败','code'=>1]);
+        }
+    }
+
+
     public function handledit($id){
         if(request()->isPost()){
             $data = request()->post();
@@ -117,7 +161,6 @@ class Product extends Common
                 // 保存图片到图片表中，并把首图保存在产品表中
                 if(!empty($data['img_str'])){
                     $imgResult = $product->updateImg($data['img_str'],$id);
-                    var_dump($imgResult);die;
                     if($imgResult){
                         return json(['type'=>'success','success'=>"更新成功！","code"=>0]);
                     }else{

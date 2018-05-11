@@ -13,5 +13,21 @@ use think\Model;
 
 class Image extends Model
 {
-    protected $hidden = ['create_time','update_time','delete_time'];
+    protected $hidden = ['delete_time','create_time','update_time'];
+
+    public function getUrlAttr($value){
+        $finaUrl = config('setting.img_prefix').$value;
+        return $finaUrl;
+    }
+
+    public static function addImg($url=""){
+        $imgId = self::where('url','=',$url)->value('id');
+        if(!$imgId){
+            $img = new self();
+            $img->url = $url;
+            $img->save();
+            $imgId = $img->id;
+        }
+        return $imgId;
+    }
 }

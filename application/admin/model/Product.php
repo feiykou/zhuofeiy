@@ -13,10 +13,14 @@ use think\Model;
 
 class Product extends Model
 {
-    protected $hidden = ['create_time','update_time','img_id','delete_time'];
+    protected $hidden = ['create_time','update_time','delete_time'];
 
     public function imgs(){
         return $this->belongsToMany('Image','product_image','img_id','product_id');
+    }
+
+    public function item(){
+        return $this->hasMany('productImage','product_id','id');
     }
 
 //    public function cate(){
@@ -27,9 +31,20 @@ class Product extends Model
 //    }
 
     public function getProductDetail($id){
-//        $product = self::with('imgs,cate')->find($id);
-        $product = self::with('imgs')->find($id);
+        $product = self::with(['item','item.img'])->find($id);
         return $product;
+    }
+
+    public function getimgArrByProduct($product){
+        $itemArr = $product->item;
+        $imgArr = [];
+        foreach ($itemArr as $k=>$v){
+            foreach ($v->img as $key=> $img_v){
+                $imgArr[$key]['url'] = $img_v['url'];
+                $imgArr[$key]['id'] = $img_v['id'];
+            }
+        };
+        return $imgArr;
     }
 
     public function getImgUrlArr($img_url){
@@ -42,10 +57,20 @@ class Product extends Model
         return $data;
     }
 
-
-    public function saveImg($img_url,$pro_id){
-        $data = $this->getImgUrlArr($img_url);
-        self::get($pro_id)->imgs()->saveAll($data);
+    /**
+     * 添加和更新中间表product_image数据
+     * @param $img_url  图片链接
+     * @param $pro_id  产品id
+     * @param $img_ids 图片集
+     * @param bool $mark  true表示更新，false表示添加
+     * @return false|int
+     * @throws \think\exception\DbException
+     */
+    public function saveImg($pro_id,$img_ids,$mark=false){
+//        $data = $this->getImgUrlArr($img_url);
+        $img_id_arr = explode(',',$img_ids);
+        $mark && self::get($pro_id)->imgs()->detach($img_id_arr);
+        self::get($pro_id)->imgs()->saveAll($img_id_arr);
         $imgModelData = Product::get($pro_id)->imgs;
         $result = self::get($pro_id)->save([
             'main_img_url' => $imgModelData[0]['url'],
@@ -59,10 +84,8 @@ class Product extends Model
         $data = $this->getImgUrlArr($img_url);
 
         foreach ($data as $key=>$v){
-            var_dump($v);
             $update = self::get($pro_id)->imgs()->update($v);
         }
-        die;
         if($update){
             $imgModelData = Product::get($pro_id)->imgs;
             $result = self::get($pro_id)->update([
@@ -129,6 +152,17 @@ class Product extends Model
             'id' => ['in',$idArr]
         ];
         $result = $this->where($data)->update(['deleted'=>0]);
+        return $result;
+    }
+
+    // 判断是否存在同名
+    public function is_unique($name="",$id=0){
+        $data = [
+            'status'    => ['eq',1],
+            'id'        => ['neq',$id],
+            'name'      => $name
+        ];
+        $result = $this->where($data)->find();
         return $result;
     }
 }

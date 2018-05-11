@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2018/4/2 0002
- * Time: 下午 16:49
+ * Date: 2018/5/11 0011
+ * Time: 下午 19:42
  */
 
 namespace app\admin\model;
@@ -11,9 +11,10 @@ namespace app\admin\model;
 
 use think\Model;
 
-class ProductImage extends Model
+class productImage extends Model
 {
-//    public function imgUrl(){
-//        return $this->belongsTo('Image','img_id','id');
-//    }
+    protected $hidden = ['delete_time','create_time','update_time'];
+    public function img(){
+        return $this->hasMany('Image','id','img_id');
+    }
 }
