@@ -38,10 +38,12 @@ class Product extends Model
     public function getimgArrByProduct($product){
         $itemArr = $product->item;
         $imgArr = [];
+
         foreach ($itemArr as $k=>$v){
-            foreach ($v->img as $key=> $img_v){
-                $imgArr[$key]['url'] = $img_v['url'];
-                $imgArr[$key]['id'] = $img_v['id'];
+            foreach ($v->img[0]->toArray() as $key=> $img_v){
+                if($key == "id" || $key == "url"){
+                    $imgArr[$k][$key] = $img_v;
+                }
             }
         };
         return $imgArr;
@@ -69,13 +71,13 @@ class Product extends Model
     public function saveImg($pro_id,$img_ids,$mark=false){
 //        $data = $this->getImgUrlArr($img_url);
         $img_id_arr = explode(',',$img_ids);
-        $mark && self::get($pro_id)->imgs()->detach($img_id_arr);
-        self::get($pro_id)->imgs()->saveAll($img_id_arr);
-        $imgModelData = Product::get($pro_id)->imgs;
-        $result = self::get($pro_id)->save([
-            'main_img_url' => $imgModelData[0]['url'],
-            'img_id'       => $imgModelData[0]['id']
-        ]);
+        $mark && self::get($pro_id)->imgs()->detach();
+        $result = self::get($pro_id)->imgs()->saveAll($img_id_arr);
+//        $imgModelData = Product::get($pro_id)->imgs;
+//        $result = self::get($pro_id)->save([
+////            'main_img_url' => $imgModelData[0]['url'],
+////            'img_id'       => $imgModelData[0]['id']
+//        ]);
         return $result;
     }
 
@@ -158,7 +160,7 @@ class Product extends Model
     // 判断是否存在同名
     public function is_unique($name="",$id=0){
         $data = [
-            'status'    => ['eq',1],
+            'deleted'    => ['eq',1],
             'id'        => ['neq',$id],
             'name'      => $name
         ];

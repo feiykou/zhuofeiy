@@ -16,7 +16,10 @@ class Image extends Model
     protected $hidden = ['delete_time','create_time','update_time'];
 
     public function getUrlAttr($value){
-        $finaUrl = config('setting.img_prefix').$value;
+        $finaUrl = $value;
+        if(!preg_match('/^http/',$value)){
+            $finaUrl = config('setting.img_prefix').$value;
+        }
         return $finaUrl;
     }
 

@@ -49,6 +49,7 @@ class Product extends Common
 
         $product = $this->model;
         $data = request()->post();
+
         $username = session('username','','admin');
         $proData = [
             'name'         =>  $data['name'],
@@ -60,7 +61,9 @@ class Product extends Common
             'attributes'   =>  $data['attributes'],
             'status'       =>  $data['status'],
             'reorder'      =>  empty($data['reorder']) ? '' : $data['reorder'],
-            'publisher'    =>  empty($username) ? 'admin' : $username
+            'publisher'    =>  empty($username) ? 'admin' : $username,
+            'img_id'       =>  $data['img_id'],
+            'main_img_url' =>  explode(';',$data['img_str'])[0]
         ];
 
 
@@ -83,13 +86,14 @@ class Product extends Common
             // 保存图片到图片表中，并把首图保存在产品表中
             if(!empty($data['img_id'])){
                 $imgResult = $product->saveImg($product->id,$data['img_id']);
+
                 if($imgResult){
                     return json(['type'=>'success','success'=>"添加成功！","code"=>0]);
                 }else{
-                    return json(['type'=>'error','error'=>"添加失败！","code"=>1]);
+                    return json(['type'=>'error','error'=>"添加失败1！","code"=>0]);
                 }
             }else{
-                return json(['type'=>'success','success'=>"添加失败！","code"=>1]);
+                return json(['type'=>'success','success'=>"添加失败2！","code"=>1]);
             }
 
         }else{
@@ -105,6 +109,7 @@ class Product extends Common
 
         $proData = $this->model->getProductDetail($id);
         $imgArr = $this->model->getimgArrByProduct($proData);
+
         // 推荐位
         $attribute_type = config('attributes.attribute_type');
         return $this->fetch('',[
@@ -117,15 +122,16 @@ class Product extends Common
 
     // 更新
     public function update($data){
+
         $result = $this->model->save($data,['id' => intval($data['id'])]);
         if($result){
             // 保存图片到图片表中，并把首图保存在产品表中
             if(!empty($data['img_id'])){
-                $imgResult = $this->modelsaveImg($data['id'],$data['img_id']);
+                $imgResult = $this->model->saveImg($data['id'],$data['img_id'],true);
                 if($imgResult){
                     return json(['type'=>'success','success'=>"更新成功！","code"=>0]);
                 }else{
-                    return json(['type'=>'error','error'=>"更新失败！","code"=>1]);
+                    return json(['type'=>'error','error'=>"更新失败1！","code"=>1]);
                 }
             }else{
                 return json(['type'=>'success','success'=>'更新失败','code'=>1]);
@@ -136,49 +142,6 @@ class Product extends Common
     }
 
 
-    public function handledit($id){
-        if(request()->isPost()){
-            $data = request()->post();
-            $product = $this->model;
-            $username = session('username','','admin');
-            $proData = [
-                'name'         =>  $data['name'],
-                'art_cate_id'  =>  $data['art_cate_id'],
-                'price'        =>  $data['price'],
-                'stock'        =>  $data['stock'],
-                'summary'      =>  $data['summary'],
-                'content'      =>  $data['content'],
-                'attributes'   =>  $data['attributes'],
-                'status'       =>  $data['status'],
-                'reorder'      =>  empty($data['reorder']) ? '' : $data['reorder'],
-                'publisher'    =>  empty($username) ? 'admin' : $username
-            ];
-
-            $result = ProductModel::updateData($id,$proData);
-
-            if($result || $data['img_str'] != ""){
-
-                // 保存图片到图片表中，并把首图保存在产品表中
-                if(!empty($data['img_str'])){
-                    $imgResult = $product->updateImg($data['img_str'],$id);
-                    if($imgResult){
-                        return json(['type'=>'success','success'=>"更新成功！","code"=>0]);
-                    }else{
-                        return json(['type'=>'error','error'=>"更新失败！","code"=>1]);
-                    }
-                }
-                return json(['type'=>'success','success'=>"更新成功！","code"=>0]);
-            }else{
-                return json(['type'=>'error','error'=>"更新失败！","code"=>1]);
-            }
-
-//            if($result){
-//                $this->success('更新成功！',url('/product'));
-//            }else{
-//                $this->error('更新失败！');
-//            }
-        }
-    }
 
 
     /**

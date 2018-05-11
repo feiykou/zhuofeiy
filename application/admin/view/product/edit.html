@@ -24,7 +24,8 @@
                     </header>
                     <div class="panel-body">
                         <div class="form">
-                            <form class="cmxform form-horizontal tasi-form" id="signupForm" data-id="{$proData.id}">
+                            <form class="cmxform form-horizontal tasi-form" id="signupForm">
+                                <input type="hidden" name="id" value="{$proData.id}">
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">标题</label>
                                     <div class="col-lg-10">
@@ -90,8 +91,8 @@
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">是否上架</label>
                                     <div class="col-lg-1 radio-item">
-                                        <label><input type="radio" style="width: 20px" {if condition="$proData.status == 1"}checked{/if} class="radio form-control" value="0" name="status" /><span>上架</span></label>
-                                        <label><input type="radio" style="width: 20px" {if condition="$proData.status == 0"}checked{/if} class="radio form-control" name="status" value="1" /><span>下架</span></label>
+                                        <label><input type="radio" style="width: 20px" {if condition="$proData.status == 1"}checked{/if} class="radio form-control" value="1" name="status" /><span>上架</span></label>
+                                        <label><input type="radio" style="width: 20px" {if condition="$proData.status == 0"}checked{/if} class="radio form-control" name="status" value="0" /><span>下架</span></label>
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -185,8 +186,33 @@
             .removeAttr('checked')
             .removeAttr('checked'); // 如果任何radio/checkbox/select inputs有checked or selected 属性，将其移除
     });
-    var pro_id = $("#signupForm").data("id");
-    var url = "{:url('handledit')}?id="+pro_id;
+    /**
+     *
+     * $childsDom  元素集
+     * attr        属性值
+     * delimiter   分隔符
+     * len         截取个数
+     *
+     **/
+    function setUpdateUrl($childsDom,attr,delimiter,len){
+        var params = "";
+        var index = 0;
+        delimiter = delimiter?delimiter:";"
+        len = len?len:false;
+        for(var i=0;i<$childsDom.length;i++){
+            $li = $childsDom.eq(i);
+            if($li.hasClass("state-complete")){
+                index++;
+                if(len && index>len){
+                    break;
+                }
+                params += $li.data(attr) + delimiter;
+            }
+        }
+        // 删除最后一个分隔符
+        params = params.substring(0,params.length-1);
+        return params;
+    }
 
     $(document).ready(function(){
         $("#signupForm").validate({
@@ -214,22 +240,17 @@
                 content: "内容不能为空"
             },
             submitHandler: function(form){
-                // 获取图片地址
-                $filelist_chids = $(".filelist > li");
-                var img_str = "";
-                for(var i=0;i<$filelist_chids.length;i++){
-                    $li = $($filelist_chids).eq(i);
-                    if($li.hasClass("state-complete")){
-                        img_str += $li.data("src") + ";";
-                    }
-                }
-                img_str = "&img_str="+img_str;
-                reqAjaxJson.init({
-                    'url': url,
-                    'reqData': $("#signupForm").serialize()+img_str,
-                    'redirectP': "{:url('/product')}"
-                });
 
+                // 获取产品详情页
+                var $img_list_childs = $("#uploader .filelist > li");
+                var img_str = setUpdateUrl($img_list_childs,'src','',1);
+                var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
+                params = "&img_str="+img_str+"&img_id="+imgs_id;
+                reqAjaxJson.init({
+                    url: "{:Url('save')}",
+                    reqData: $('#signupForm').serialize()+params,
+                    redirectP: "/product"
+                });
 
 
             }
