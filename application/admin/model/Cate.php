@@ -28,8 +28,10 @@ class Cate extends Model
 
         // 排除id字符串的两种方式
         $parentDept = $model->where(["id"=>['not in',$ids]])->select();
+
         if(!$parentDept){
-            throw new CateException();
+            $parentSortDept = [];
+//            throw new CateException();
         }else{
             // 对部门进行重新排序
             $parentSortDept = sortData($parentDept);

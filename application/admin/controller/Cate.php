@@ -63,13 +63,9 @@ class Cate extends Common
     // 编辑分类
     function edit($id=0){
         $cateIdData = CateModel::where('id','=',$id)->find();
-        $cateData = CateModel::alias('a1')
-            ->field('a1.*,a2.name as pname')
-            ->join('cate a2','a1.pid=a2.id','left')
-            ->select();
-
         $parentData = CateModel::getDeptData($id);
         $this->assign('cateArr',$parentData);
+
         if($cateIdData){
             $this->assign('cateData',$cateIdData);
             return $this->fetch();
