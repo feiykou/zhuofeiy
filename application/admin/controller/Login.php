@@ -50,7 +50,7 @@ class Login extends Controller
                 $this->error('密码错误！',url('/login'));
             }
             if($result === 2){
-                $this->success('登录成功',url('/'));
+                $this->success('登录成功',url('/'),'2');
             }
         }else{
             // 获取session

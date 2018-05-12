@@ -21,14 +21,14 @@ class Common extends Controller
     {
         $isLogin = $this->isLogin();
         if(!$isLogin){
-            $this->error('您尚未登录系统',url('/login'));
+            $this->redirect(url('/login'));
         }
         $Username = $this->account->name;
         session('username',$Username,'admin');
         $Uid = $this->account->id;
 
         // 判断用户名是否是admin，如果是则不进行验证
-        if($Username == 'admin'){
+        if($Username == 'zhuo'){
             return true;
         }
 
