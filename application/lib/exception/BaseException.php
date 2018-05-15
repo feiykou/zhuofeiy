@@ -25,6 +25,7 @@ class BaseException extends Exception
 
     public function __construct($params=[])
     {
+
         if(!is_array($params)){
             return ;
         }

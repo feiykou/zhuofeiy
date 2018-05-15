@@ -26,3 +26,4 @@ Route::get('login','admin/login/index');
 
 
 Route::get('uploader','admin/webuploader/img');
+

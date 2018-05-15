@@ -11,7 +11,7 @@ namespace app\lib\exception;
 
 class ParameterException extends BaseException
 {
-    public $code = 400;
+    public $code = 300;
 
     public $msg = "参数错误";
 

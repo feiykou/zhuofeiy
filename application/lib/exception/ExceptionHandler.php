@@ -21,7 +21,6 @@ class ExceptionHandler extends Handle
 
     // 需要返回客户端的状态
     public function render(\Exception $e){
-        echo 1;
         if($e instanceof BaseException){
             $this->code = $e->code;
             $this->msg = $e->msg;
@@ -49,7 +48,6 @@ class ExceptionHandler extends Handle
     }
 
     private function recordErrorLog(\Exception $e){
-        echo 1;
         Log::init([
             // 日志记录方式，内置 file socket 支持扩展
             'type'  => 'File',

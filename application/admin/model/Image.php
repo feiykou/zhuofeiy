@@ -18,7 +18,7 @@ class Image extends Model
     public function getUrlAttr($value){
         $finaUrl = $value;
         if(!preg_match('/^http/',$value)){
-            $finaUrl = config('setting.img_prefix').$value;
+            $finaUrl = config('setting.http_prefix').config('setting.admin_img_prefix').$value;
         }
         return $finaUrl;
     }
