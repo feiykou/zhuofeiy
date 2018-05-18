@@ -9,5 +9,6 @@
 return [
     'http_prefix' => 'http://z.cn/',
     'api_img_prefix' => 'static/api/images',
-    'admin_img_prefix' => ''
+    'admin_img_prefix' => '',
+    'token_expire_in'  => 7200
 ];

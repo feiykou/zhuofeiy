@@ -16,6 +16,13 @@ use app\lib\exception\ProductException;
 
 class Product
 {
+    /**
+     * 获取最近产品
+     * @param int $count
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws ProductException
+     * @throws \app\lib\exception\ParameterException
+     */
     public function getRecent($count=15){
         (new Count())->goCheck();
         $products = ProductModel::getMostRecent($count);
@@ -30,7 +37,13 @@ class Product
         return $products;
     }
 
-
+    /**
+     * 获取分类下的产品
+     * @param $id
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws ProductException
+     * @throws \app\lib\exception\ParameterException
+     */
     public function getAllInCate($id){
         (new IDMustBePostiveInt())->goCheck();
         $products = ProductModel::getProductsBtCateID($id);
@@ -40,5 +53,10 @@ class Product
         // 临时隐藏summary字段
         $products = $products->hidden(['summary']);
         return $products;
+    }
+
+    public function getOne($id){
+        (new IDMustBePostiveInt())->goCheck();
+
     }
 }

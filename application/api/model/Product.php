@@ -43,7 +43,14 @@ class Product extends BaseModel
         return $products;
     }
 
-
+    /**
+     * 获取分类下的产品
+     * @param $cateID
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public static function getProductsBtCateID($cateID){
         $data = [
             'art_cate_id' => $cateID
@@ -52,6 +59,11 @@ class Product extends BaseModel
             ->select();
 
         return $products;
+    }
+
+
+    public static function getProductDetail($id){
+
     }
 
 
