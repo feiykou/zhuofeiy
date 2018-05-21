@@ -27,8 +27,9 @@ Route::get('api/:version/product/:id','api/:version.Product/getOne');
 // 获取分类的全部数据
 Route::get('api/:version/cate/all','api/:version.Cate/getAllCategories');
 
+// 获取用户token
 Route::post('api/:version/token/user','api/:version.Token/getToken');
 
-
-
+// Address创建和查询
+Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
 
