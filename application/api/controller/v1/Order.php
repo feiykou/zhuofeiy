@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 
 use app\api\validate\OrderPlace;
 use app\api\service\Token as TokenService;
+use app\api\service\Order as OrderService;
 
 class Order extends BaseController
 {
@@ -22,9 +23,11 @@ class Order extends BaseController
     // 管理员是不能调用placeOrder接口，因为这个接口是给用户做的一个下单接口，管理员不应该有这个权限调用
     public function placeOrder(){
         (new OrderPlace())->goCheck();
-        $product = input('post.products/a');
+        $products = input('post.products/a');
         $uid = TokenService::getCurrentUid();
         // 业务流程写在service中
-
+        $order = new OrderService();
+        $status = $order->place($uid, $products);
+        return $status;
     }
 }

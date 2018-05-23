@@ -33,3 +33,10 @@ Route::post('api/:version/token/user','api/:version.Token/getToken');
 // Address创建和查询
 Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
 
+// order
+Route::post('api/:version/order','api/:version.Order/placeOrder');
+
+// pay
+Route::post('api/:version/pay/pre_order','api/:version.Pay/getPreOrder');
+// 给微信定义的回调API
+Route::post('api/:version/pay/notify','api/:version.Pay/receiveNotify');

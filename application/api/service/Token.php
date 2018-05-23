@@ -97,4 +97,16 @@ class Token
             throw new TokenException();
         }
     }
+
+    // 检测checkedID是否是当前用户的订单
+    public static function isVaildOperate($checkedID){
+        if(!$checkedID){
+            throw new Exception('检查UID时必须传入一个被检查的UID');
+        }
+        $currentOperateUID = self::getCurrentUid();
+        if($currentOperateUID == $checkedID){
+            return true;
+        }
+        return false;
+    }
 }
