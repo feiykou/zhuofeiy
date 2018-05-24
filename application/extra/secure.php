@@ -6,5 +6,6 @@
  * Time: 下午 14:02
  */
 return [
-    'token_salt'   =>   'FDhkjdhsda4665dw'
+    'token_salt'   =>   'FDhkjdhsda4665dw',
+    'pay_back_url' =>   'http://zhuo.cn/api/v1/pay/notify'
 ];

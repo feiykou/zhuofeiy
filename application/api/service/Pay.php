@@ -66,7 +66,7 @@ class Pay
         $wxOrderData->SetBody('卓儿');
         $wxOrderData->SetOpenid($openid);
         // 给一个地址，用于接收微信的回调通知
-        $wxOrderData->SetNotify_url();
+        $wxOrderData->SetNotify_url(config('secure.pay_back_url'));
         return $this->getPaySignature($wxOrderData);
     }
 

@@ -9,6 +9,7 @@
 namespace app\api\controller\v1;
 
 
+use app\api\service\WxNotify;
 use app\api\validate\IDMustBePostiveInt;
 use app\api\service\Pay as PayService;
 
@@ -50,5 +51,7 @@ class Pay extends BaseController
         // 3、减库存
 
         // 4、如果成功处理，返回微信成功处理的信息，否则需要返回没有成功处理（微信会再次发送通知）
+        $notify = new WxNotify();
+        $notify->Handle();
     }
 }
