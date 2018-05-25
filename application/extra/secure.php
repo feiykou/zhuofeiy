@@ -7,5 +7,5 @@
  */
 return [
     'token_salt'   =>   'FDhkjdhsda4665dw',
-    'pay_back_url' =>   'http://zhuo.cn/api/v1/pay/notify'
+    'pay_back_url' =>   'https://www.konlyz.com/api/v1/pay/notify'
 ];
