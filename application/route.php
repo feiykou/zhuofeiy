@@ -22,6 +22,8 @@ Route::get('role','admin/role/index');
 Route::get('rule','admin/auth_rule/index');
 Route::get('product','admin/product/index');
 Route::get('proAdd','admin/product/add');
+Route::get('banner','admin/banner/index');
+Route::get('bannerAdd','admin/banner/add');
 Route::get('login','admin/login/index');
 
 
