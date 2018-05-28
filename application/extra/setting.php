@@ -7,8 +7,8 @@
  */
 
 return [
-    'http_prefix' => 'https://www.konlyz.com/',
+    'http_prefix' => 'http://zhuo.cn/',
     'api_img_prefix' => 'static/api/images',
-    'admin_img_prefix' => '',
+    'admin_img_prefix' => 'img/',
     'token_expire_in'  => 7200
 ];

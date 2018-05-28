@@ -95,7 +95,7 @@ class Article extends Common
         ]);
     }
 
-
+    // 保存和更新数据
     public function save(){
         if(!request()->post()){
             $this->error("请求失败");
@@ -109,10 +109,11 @@ class Article extends Common
         $proData = [
             'name'          =>      $data['name'],
             'category_id'   =>      $data['category_id'],
-            'img_url'       =>      empty($data['img_url'])?'':$data['img_url'],
+            'img_url'       =>      empty($data['img_url'])?'':explode(';',$data['img_url'])[0],
             'content'       =>      empty($data['content'])?'':$data['content'],
             'click_num'     =>      $data['click_num'],
             'img_id'        =>      $data['img_id'],
+            'user_id'       =>      $this->getUserId()
         ];
         $is_exist_id = empty($data['id']);
 
@@ -129,7 +130,7 @@ class Article extends Common
             return $update = $this->update($proData);
         }
 
-        $result = $this->model->save($proData);
+        $result = $this->model->addArticleData($proData);
         if($result){
             return json(['type'=>'success','success'=>'添加成功','code'=>0]);
         }else{
@@ -139,7 +140,8 @@ class Article extends Common
 
     // 更新
     public function update($data){
-        $result = $this->model->save($data,['id' => intval($data['id'])]);
+        $result = $this->model->updateArtData($data);
+//        $result = $this->model->save($data,['id' => intval($data['id'])]);
         if($result){
             return json(['type'=>'success','success'=>'更新成功','code'=>0]);
         }else{

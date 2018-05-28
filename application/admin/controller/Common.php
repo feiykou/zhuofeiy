@@ -65,6 +65,12 @@ class Common extends Controller
         return false;
     }
 
+    public function getUserId(){
+        // 获取session
+        $user = $this->getLoginUser();
+        return $user->id;
+    }
+
     /* 获取session数据 */
     public function getLoginUser(){
         if(!$this->account){
@@ -95,7 +101,7 @@ class Common extends Controller
             $info = $file->move('img','');
 //            $info = $file->move('upload',true,false);
             if($info){
-                $img_url = DS . 'img' . DS . $info->getSaveName();
+                $img_url = DS . $info->getSaveName();
             }
         }
 

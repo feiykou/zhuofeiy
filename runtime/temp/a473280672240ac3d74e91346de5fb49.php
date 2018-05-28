@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:80:"D:\SoftDownload\wamp\www\zhuo\public/../application/admin\view\article\edit.html";i:1526132888;s:69:"D:\SoftDownload\wamp\www\zhuo\application\admin\view\public\base.html";i:1526130479;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:80:"D:\SoftDownload\wamp\www\zhuo\public/../application/admin\view\article\edit.html";i:1527256699;s:69:"D:\SoftDownload\wamp\www\zhuo\application\admin\view\public\base.html";i:1526130479;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,10 +146,6 @@
 <!--引入webuploaderJS-->
 <script type="text/javascript" src="/static/admin/lib/webuploader/webuploader.js"></script><script type="text/javascript" src="/static/admin/lib/webuploader/feiy_upload.js"></script>
 
-<!-- 配置文件 -->
-<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.config.js"></script>
-<!-- 编辑器源码文件 -->
-<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.all.js"></script>
 
 <script type="text/javascript">
     var config = {
@@ -173,15 +169,6 @@
             $parents.remove();
         }
     });
-    //注意：设置编辑器属性要在初始化编辑器之前设置，否则无效果
-    window.UEDITOR_CONFIG.initialFrameHeight = 560; //设置编辑框的高度
-    //设置编辑器高度不自动加高
-    window.UEDITOR_CONFIG.autoHeightEnabled=false;
-    //禁止显示元素路径
-    window.UEDITOR_CONFIG.elementPathEnabled = false;
-    //实例化编辑器
-    var ue = UE.getEditor('zhuo-container');
-
 
 
     $(".btn-save-submit").on("click",function(){
@@ -268,6 +255,21 @@
 
 
 
+</script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.all.min.js"></script>
+
+<script>
+    //注意：设置编辑器属性要在初始化编辑器之前设置，否则无效果
+    window.UEDITOR_CONFIG.initialFrameHeight = 560; //设置编辑框的高度
+    //设置编辑器高度不自动加高
+    window.UEDITOR_CONFIG.autoHeightEnabled=false;
+    //禁止显示元素路径
+    window.UEDITOR_CONFIG.elementPathEnabled = false;
+    //实例化编辑器
+    var ue = UE.getEditor('zhuo-container');
 </script>
 
 
