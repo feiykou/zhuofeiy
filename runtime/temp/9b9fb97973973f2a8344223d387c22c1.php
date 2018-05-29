@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\SoftDownload\wamp\www\zhuo\public/../application/admin\view\article\add.html";i:1527256699;s:69:"D:\SoftDownload\wamp\www\zhuo\application\admin\view\public\base.html";i:1526130479;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\SoftDownload\wamp\www\zhuo\public/../application/admin\view\article\add.html";i:1527519539;s:69:"D:\SoftDownload\wamp\www\zhuo\application\admin\view\public\base.html";i:1526130479;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +65,14 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="form-group ">
+                                    <label class="control-label col-lg-1">图片类型</label>
+                                    <div class="col-lg-10 radio-item">
+                                        <label><input type="radio" style="width: 20px" value="1" checked="checked" class="radio form-control" name="attributes" /><span>小图</span></label>
+                                        <label><input type="radio" style="width: 20px" value="2" class="radio form-control" name="attributes" /><span>大图</span></label>
+                                        <label><input type="radio" style="width: 20px" value="3" class="radio form-control" name="attributes" /><span>三图</span></label>
+                                    </div>
+                                </div>
                                 <div class="form-group ">
                                     <label for="art_category_id" class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
@@ -206,7 +213,7 @@
             submitHandler: function(form){
                 // 获取产品详情页
                 var $img_list_childs = $("#uploader .filelist > li");
-                var imgs_url = setUpdateUrl($img_list_childs,'src','',1);
+                var imgs_url = setUpdateUrl($img_list_childs,'src','');
                 var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
                 params = "&img_url="+imgs_url+"&img_id="+imgs_id;
                 reqAjaxJson.init({

@@ -175,3 +175,16 @@
 	margin-right: 10px;
 }
 
+/* 推荐位 */
+.radio-item span{
+	 display: inline-block;
+	 margin: 0 20px 0 3px;
+	 vertical-align: middle;
+ }
+.sum-info{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	border-color: #e2e2e4;
+}

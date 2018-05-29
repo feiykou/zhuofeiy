@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"D:\SoftDownload\wamp\www\zhuo\public/../application/admin\view\article\index.html";i:1526135918;s:69:"D:\SoftDownload\wamp\www\zhuo\application\admin\view\public\base.html";i:1526130479;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"D:\SoftDownload\wamp\www\zhuo\public/../application/admin\view\article\index.html";i:1527524156;s:69:"D:\SoftDownload\wamp\www\zhuo\application\admin\view\public\base.html";i:1526130479;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +69,7 @@
                     <thead>
                         <tr>
                             <td class="view-message inbox-small-cells"></td>
+                            <td class="view-message">id</td>
                             <td class="inbox-small-cells">标题</td>
                             <td class="view-message">类型</td>
                             <td class="view-message">图片</td>
@@ -87,6 +88,7 @@
                                     </label>
                                 </div>
                             </td>
+                            <td class="view-message"><?php echo $art['id']; ?></td>
                             <td class="view-message"><?php echo $art['name']; ?></td>
                             <td class="view-message"><?php echo $art['pname']; ?></td>
                             <td class="view-message art-img">
