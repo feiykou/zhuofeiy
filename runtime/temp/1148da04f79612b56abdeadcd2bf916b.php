@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:70:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\index\index.html";i:1525923036;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;s:62:"F:\phpStudy\WWW\zhuo\application\admin\view\public\header.html";i:1525923036;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\left.html";i:1525923036;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:70:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\index\index.html";i:1527241867;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;s:62:"F:\phpStudy\WWW\zhuo\application\admin\view\public\header.html";i:1525923036;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\left.html";i:1527472103;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -308,6 +308,7 @@
                 <ul class="sub">
                     <li><a class="" href="javascript:;" data-href="/cate">产品分类</a></li>
                 </ul>
+            </li>
             <li class="sub-menu">
                 <a href="javascript:;" class="">
                     <i class="icon-cogs"></i>
@@ -317,6 +318,17 @@
                 <ul class="sub">
                     <li><a class="" href="javascript:;" data-href="/product">商品列表</a></li>
                     <li><a class="" href="javascript:;" data-href="/proAdd">添加商品</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon-cogs"></i>
+                    <span>轮播位管理</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" href="javascript:;" data-href="/bannerItem">轮播位列表</a></li>
+                    <li><a class="" href="javascript:;" data-href="/bannerItemAdd">添加轮播</a></li>
                 </ul>
             </li>
             <li class="sub-menu">
@@ -368,5 +380,7 @@
     <script src="/static/admin/lib/loading/loading-1.0.js"></script>
     <script src="/static/admin/js/zhuo-common.js"></script>
     
+
+
 </body>
 </html>

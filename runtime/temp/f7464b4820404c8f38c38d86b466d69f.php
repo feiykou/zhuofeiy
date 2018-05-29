@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:72:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\article\index.html";i:1526378223;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:71:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\banner\index.html";i:1527471419;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +8,16 @@
 <meta name="description" content="">
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
+<style>
+    .reorder input{
+        width: 50px;
+        height: 31px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        color: #a59e9e;
+        text-align: center;
+    }
+</style>
 
     <link rel="shortcut icon" href="img/favicon.html">
     <!-- Bootstrap core CSS -->
@@ -39,69 +49,59 @@
         <!--mail inbox start-->
         <aside class="lg-side form-group">
             <div class="inbox-head">
-                <h3>文章列表</h3>
-                <form class="pull-right position" action="#">
-                    <div class="input-append">
-                        <input type="text"  placeholder="Search Mail" class="sr-input">
-                        <button type="button" class="btn sr-btn"><i class="icon-search"></i></button>
-                    </div>
-                </form>
+                <h3>轮播图位列表</h3>
             </div>
             <div class="inbox-body">
                 <div class="mail-option">
-                    <div class="chk-all">
-                        <div class="checkbox i-checks">
-                            <label>
-                                <div class="checkbox_square-green"><input type="checkbox" value="" style="position: absolute; opacity: 0;"></div>全选
-                            </label>
+                    <div class="col-lg-2">
+                        <div class="chk-all">
+                            <div class="checkbox i-checks">
+                                <label>
+                                    <div class="checkbox_square-green"><input type="checkbox" value="" style="position: absolute; opacity: 0;"></div>全选
+                                </label>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn mini tooltips" data-placement="top" data-original-title="Refresh">
+                                <i class="icon-refresh"></i>
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a href="javascript:;" class="btn mini selectAll-del">删除</a>
                         </div>
                     </div>
-                    <div class="btn-group">
-                        <a class="btn mini tooltips" data-placement="top" data-original-title="Refresh">
-                            <i class="icon-refresh"></i>
-                        </a>
+                    <div class="col-lg-2">
+                        <form action="#">
+                            <select class="form-control valid" name="art_cate_id">
+                                <option value="0">顶级分类</option>
+                                <option value="17"> 影音</option>
+                            </select>
+                        </form>
                     </div>
-                    <div class="btn-group">
-                        <a href="javascript:;" class="btn mini selectAll-del">删除</a>
-                    </div>
+                    <button type="button" class="btn sr-btn"><i class="icon-search"></i></button>
                 </div>
                 <table class="table table-inbox table-hover">
                     <thead>
                         <tr>
                             <td class="view-message inbox-small-cells"></td>
-                            <td class="inbox-small-cells">标题</td>
-                            <td class="view-message">类型</td>
+                            <td class="view-message">id</td>
+                            <td class="inbox-small-cells">轮播图位</td>
+                            <td class="view-message">描述</td>
                             <td class="view-message">图片</td>
-                            <td class="view-message">发布人</td>
-                            <td class="view-message">发布时间</td>
+                            <td class="view-message">价格</td>
+                            <td class="view-message">库存</td>
+                            <td class="view-message">是否上架</td>
+                            <td class="view-message">分类</td>
+                            <td class="view-message">发布者</td>
                             <td class="view-message">操作</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(is_array($artData) || $artData instanceof \think\Collection || $artData instanceof \think\Paginator): $i = 0; $__LIST__ = $artData;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$art): $mod = ($i % 2 );++$i;?>
-                        <tr data-id="<?php echo $art['id']; ?>">
-                            <td class="inbox-checkbox">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <div class="checkbox_square-green"><input type="checkbox" value="" style="position: absolute; opacity: 0;"></div>
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="view-message"><?php echo $art['name']; ?></td>
-                            <td class="view-message"><?php echo $art['pname']; ?></td>
-                            <td class="view-message art-img">
-                                <?php if($art['img_url']): ?><a href="<?php echo $art['img_url']; ?>" target="_blank"><img src="<?php echo $art['img_url']; ?>" width="60" height="60" alt=""></a><?php endif; ?>
-                            </td>
-                            <td class="view-message">姚卓</td>
-                            <td class="view-message"><?php echo $art['create_time']; ?></td>
-                            <td class="view-message"><span class="btn btn-primary btn-xs mr10 btn-del" data-id="<?php echo $art['id']; ?>" data-toggle="modal" data-target="#del-modal">删除</span> <a href="<?php echo url('edit',['id'=>$art['id']]); ?>" class="btn btn-primary btn-xs">编辑</a></td>
-                        </tr>
-                        <?php endforeach; endif; else: echo "" ;endif; ?>
 
                     </tbody>
                 </table>
                 <nav class="paging-wrap" aria-label="...">
-                    <?php echo $page; ?>
+
                 </nav>
             </div>
 
@@ -173,6 +173,7 @@
         });
 
         $(".selectAll-del").on("click",function(){
+
             getSelectAllTr();
         });
 
@@ -186,23 +187,22 @@
                     idsArr.push($(trDom).data('id'));
                 }
             });
-
             reqAjaxJson.init({
                 'url': "<?php echo url('removeMoreArt'); ?>",
                 'reqData': {idsArr:idsArr},
-                'redirectP': "<?php echo url('/artlist'); ?>"
+                'redirectP': "<?php echo url('/product'); ?>"
             });
         }
 
 
 
-        modelReq({
-            "modalId": "#del-modal",
-            "url": '/admin/article/removeArt',
-            "redirectP": "/artlist",
-            "sureClass": ".cateDel-sub",
-            "btnClass": ".btn-del"
-        });
+       modelReq({
+           "modalId": "#del-modal",
+           "url": '/admin/product/removeArt',
+           "redirectP": "/product",
+           "sureClass": ".cateDel-sub",
+           "btnClass": ".btn-del"
+       });
 
 
 

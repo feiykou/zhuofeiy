@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:72:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\product\index.html";i:1526046195;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:72:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\product\index.html";i:1526378223;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +10,12 @@
 <title>电商cms</title>
 <style>
     .reorder input{
-        width:56px;
-        border:1px solid #ccc;
+        width: 50px;
+        height: 31px;
+        border: 1px solid #ccc;
         box-sizing: border-box;
-        padding-left: 5px;
-        color: #666;
+        color: #a59e9e;
+        text-align: center;
     }
 </style>
 
@@ -103,7 +104,7 @@
                             <td class="view-message"><?php echo $data['id']; ?></td>
                             <td class="view-message"><?php echo $data['name']; ?></td>
                             <td class="view-message reorder"><input type="text" value="<?php echo $data['reorder']; ?>"></td>
-                            <td class="view-message"><?php if($data['main_img_url']): ?><img src="<?php echo $data['main_img_url']; ?>" width="60" height="60"><?php else: ?>暂无<?php endif; ?></td>
+                            <td class="view-message"><?php if($data['main_img_url']): ?><a href="<?php echo $data['main_img_url']; ?>" target="_blank"><img src="<?php echo $data['main_img_url']; ?>" width="60" height="60"></a><?php else: ?>暂无<?php endif; ?></td>
                             <td class="view-message"><?php echo $data['price']; ?></td>
                             <td class="view-message"><?php echo $data['stock']; ?></td>
                             <td class="view-message"><?php if($data['status'] == 1): ?>上架<?php else: ?>下架<?php endif; ?></td>

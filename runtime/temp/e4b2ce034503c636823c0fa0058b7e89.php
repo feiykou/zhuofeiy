@@ -1,19 +1,44 @@
-<script src="../../../../public/static/admin/js/jquery.validate.js"></script>
-{extend name="public:base" /}
-{block name="property"}
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:69:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\banner\add.html";i:1527470178;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 <meta name="description" content="">
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
 
 
-{/block}
-{block name="css"}
+
+    <link rel="shortcut icon" href="img/favicon.html">
+    <!-- Bootstrap core CSS -->
+    <link href="/static/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/css/bootstrap-reset.css" rel="stylesheet">
+    <!-- 字体表 -->
+    <link href="/static/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- 主要样式表-->
+    <link href="/static/admin/css/style.css" rel="stylesheet">
+    <!-- 响应式css -->
+    <link href="/static/admin/css/style-responsive.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/static/admin/css/plugins/custom.css">
+    <link rel="stylesheet" href="/static/admin/css/zhuo-style.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/admin/js/html5shiv.js"></script>
+    <script src="/static/admin/js/respond.min.js"></script>
+    <![endif]-->
+    
 <!--引入webuploaderCss-->
-{uploader:webuploadercss /}
-{/block}
+<link href="/static/admin/lib/webuploader/webuploader.css" rel="stylesheet">
 
-
-{block name="content"}
+</head>
+<body>
+    <section id="container" class="">
+        
+        
+        
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
@@ -37,9 +62,9 @@
                                     <div class="col-lg-2">
                                         <select class="form-control" name="art_cate_id">
                                             <option value='0'>顶级分类</option>
-                                            {volist name='cateArr' id='data'}
-                                            <option value='{$data.id}'>{$data.level | str_repeat='--',###*2} {$data.name}</option>
-                                            {/volist}
+                                            <?php if(is_array($cateArr) || $cateArr instanceof \think\Collection || $cateArr instanceof \think\Paginator): $i = 0; $__LIST__ = $cateArr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?>
+                                            <option value='<?php echo $data['id']; ?>'><?php echo str_repeat('--',$data['level'] *2); ?> <?php echo $data['name']; ?></option>
+                                            <?php endforeach; endif; else: echo "" ;endif; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -96,7 +121,13 @@
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
-                                        {Uploader:webuploader btnVal="上传产品图"}{/Uploader:webuploader}
+                                                    <div id="uploader" class="uploader-item">
+                <div class="uploader_btns">
+                    <div class="filePicker"></div><div class="uploadBtn">上传产品图</div>
+                </div>
+                <!--用来存放item-->
+                <div class="queueList"></div>
+            </div>
                                     </div>
                                 </div>
 
@@ -129,22 +160,33 @@
     </section>
 </section>
 <!--main content end-->
-{/block}
 
+    </section>
 
-{block name="script"}
-<script type="text/javascript" src="__RES_ADMIN__/js/jquery.validate.min.js"></script>
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="/static/admin/js/jquery.js"></script>
+    <script src="/static/admin/js/bootstrap.min.js"></script>
+    <!-- 滚动条样式 -->
+    <script src="/static/admin/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="/static/admin/js/jquery.scrollTo.min.js"></script>
+    <!--common script for all pages-->
+    <script src="/static/admin/js/common-scripts.js"></script>
+    <script src="/static/admin/js/custom.js"></script>
+    <script src="/static/admin/lib/loading/loading-1.0.js"></script>
+    <script src="/static/admin/js/zhuo-common.js"></script>
+    
+<script type="text/javascript" src="/static/admin/js/jquery.validate.min.js"></script>
 
 <!--script for this page-->
-<script src="__RES_ADMIN__/js/messages_zh.min.js"></script>
-<!--<script src="__RES_ADMIN__/js/form-validation-script.js"></script>-->
+<script src="/static/admin/js/messages_zh.min.js"></script>
+<!--<script src="/static/admin/js/form-validation-script.js"></script>-->
 
 <!--引入webuploaderJS-->
-{uploader:webuploaderjs /}
+<script type="text/javascript" src="/static/admin/lib/webuploader/webuploader.js"></script><script type="text/javascript" src="/static/admin/lib/webuploader/feiy_upload.js"></script>
 
 <script type="text/javascript">
     var config = {
-        "upload_server": "{:url('getSaveNameImg')}",
+        "upload_server": "<?php echo url('getSaveNameImg'); ?>",
     };
 
     $(".btn-save-submit").on("click",function(){
@@ -233,7 +275,7 @@
                 console.log(imgs_id);
                 params = "&img_str="+img_str+"&img_id="+imgs_id;
                 reqAjaxJson.init({
-                    url: "{:Url('save')}",
+                    url: "<?php echo Url('save'); ?>",
                     reqData: $('#signupForm').serialize()+params,
                     redirectP: "/product"
                 });
@@ -244,9 +286,9 @@
 
 </script>
 <!-- 配置文件 -->
-<script type="text/javascript" src="__RES_ADMIN__/lib/Ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
-<script type="text/javascript" src="__RES_ADMIN__/lib/Ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.all.min.js"></script>
 
 <script>
     //注意：设置编辑器属性要在初始化编辑器之前设置，否则无效果
@@ -261,4 +303,6 @@
 
 
 
-{/block}
+
+</body>
+</html>

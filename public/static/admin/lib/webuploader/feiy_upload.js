@@ -636,11 +636,17 @@ var feiy_upload = {
             if (ret.code == 1) {
                 var $img_id_box = $('#' + file.id);
                 $img_id_box.data("src", ret.data.img_url);
+
                 if(ret.data.img_id){
                     $img_id_box.data("img_id", ret.data.img_id);
                 }
             } else {
-                // 上传错误或失败
+                var $img_id_box = $('#' + file.id);
+                $img_id_box.data("src", '');
+
+                if(ret.data.img_id){
+                    $img_id_box.data("img_id", 0);
+                }
             }
         });
     },

@@ -193,7 +193,6 @@
                 var imgs_url = setUpdateUrl($img_list_childs,'src','',1);
                 var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
                 params = "&img_url="+imgs_url+"&img_id="+imgs_id;
-                console.log(params);
                 reqAjaxJson.init({
                     url: "{:Url('save')}",
                     reqData: $('#signupForm').serialize()+params,

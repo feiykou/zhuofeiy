@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:70:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\product\add.html";i:1527241426;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:74:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\banner_item\add.html";i:1527493150;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +32,21 @@
     
 <!--引入webuploaderCss-->
 <link href="/static/admin/lib/webuploader/webuploader.css" rel="stylesheet">
+<style>
+    .radio-item span{
+        display: inline-block;
+        margin: 0 20px 0 3px;
+        vertical-align: middle;
+        font-weight: normal;
+    }
+    .sum-info{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        border-color: #e2e2e4;
+    }
+</style>
 
 </head>
 <body>
@@ -46,84 +61,49 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        添加商品
+                        添加轮播图
                     </header>
                     <div class="panel-body">
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" id="signupForm">
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">标题</label>
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-2">
                                         <input class=" form-control" name="name" type="text" />
                                     </div>
                                 </div>
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-1">分类</label>
+                                    <label class="control-label col-lg-1">轮播图位列表</label>
                                     <div class="col-lg-2">
-                                        <select class="form-control" name="art_cate_id">
-                                            <option value='0'>顶级分类</option>
-                                            <?php if(is_array($cateArr) || $cateArr instanceof \think\Collection || $cateArr instanceof \think\Paginator): $i = 0; $__LIST__ = $cateArr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?>
-                                            <option value='<?php echo $data['id']; ?>'><?php echo str_repeat('--',$data['level'] *2); ?> <?php echo $data['name']; ?></option>
+                                        <select class="form-control" name="banner_id">
+                                            <?php if(is_array($bannerArr) || $bannerArr instanceof \think\Collection || $bannerArr instanceof \think\Paginator): $i = 0; $__LIST__ = $bannerArr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$banner): $mod = ($i % 2 );++$i;?>
+                                                <option value='<?php echo $banner['id']; ?>' <?php if($banner['id'] == 1): ?>selected<?php endif; ?>><?php echo $banner['name']; ?></option>
                                             <?php endforeach; endif; else: echo "" ;endif; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-1">价格</label>
+                                    <label class="control-label col-lg-1">id</label>
                                     <div class="col-lg-1">
-                                        <input class=" form-control" name="price" type="text" />
+                                        <input class="form-control" name="key_word" type="text" />
                                     </div>
                                 </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">库存量</label>
-                                    <div class="col-lg-1">
-                                        <input class="form-control" name="stock" type="text" />
-                                    </div>
-                                </div>
-                                <style>
-                                    .radio-item span{
-                                        display: inline-block;
-                                        margin: 0 20px 0 3px;
-                                        vertical-align: middle;
-                                    }
-                                    .sum-info{
-                                        -webkit-box-sizing: border-box;
-                                        -moz-box-sizing: border-box;
-                                        box-sizing: border-box;
-                                        padding: 10px;
-                                        border-color: #e2e2e4;
-                                    }
-                                </style>
+
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">推荐位</label>
                                     <div class="col-lg-10 radio-item">
-                                        <label><input type="radio" style="width: 20px" value="1" checked="checked" class="radio form-control" name="attributes" /><span>推荐</span></label>
-                                        <label><input type="radio" style="width: 20px" value="2" class="radio form-control" name="attributes" /><span>新上</span></label>
-                                        <label><input type="radio" style="width: 20px" value="3" class="radio form-control" name="attributes" /><span>热卖</span></label>
-                                        <label><input type="radio" style="width: 20px" value="4" class="radio form-control" name="attributes" /><span>促销</span></label>
-                                        <label><input type="radio" style="width: 20px" value="5" class="radio form-control" name="attributes" /><span>包邮</span></label>
-                                        <label><input type="radio" style="width: 20px" value="6" class="radio form-control" name="attributes" /><span>限时卖</span></label>
+                                        <?php if(is_array($redic_typeArr) || $redic_typeArr instanceof \think\Collection || $redic_typeArr instanceof \think\Paginator): $i = 0; $__LIST__ = $redic_typeArr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$typeArr): $mod = ($i % 2 );++$i;?>
+                                        <label><input type="radio" style="width: 20px" value="<?php echo $typeArr['type']; ?>" <?php if($typeArr['type'] == 1): ?>checked<?php endif; ?> class="radio form-control" name="type" /><span><?php echo $typeArr['name']; ?></span></label>
+                                        <?php endforeach; endif; else: echo "" ;endif; ?>
                                     </div>
                                 </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">摘要</label>
-                                    <div class="col-lg-10">
-                                        <textarea class="sum-info" name="summary" cols="160" rows="5" placeholder="摘要信息"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">是否上架</label>
-                                    <div class="col-lg-1 radio-item">
-                                        <label><input type="radio" style="width: 20px" checked class="radio form-control" value="0" name="status" /><span>上架</span></label>
-                                        <label><input type="radio" style="width: 20px" class="radio form-control" name="status" value="1" /><span>下架</span></label>
-                                    </div>
-                                </div>
+
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
                                                     <div id="uploader" class="uploader-item">
                 <div class="uploader_btns">
-                    <div class="filePicker"></div><div class="uploadBtn">上传产品图</div>
+                    <div class="filePicker"></div><div class="uploadBtn">上传图片</div>
                 </div>
                 <!--用来存放item-->
                 <div class="queueList"></div>
@@ -131,23 +111,10 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">排序</label>
-                                    <div class="col-lg-1">
-                                        <input class=" form-control" name="reorder" type="text" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-1">文章编辑</label>
-                                    <div class="col-lg-10">
-                                        <!-- 加载编辑器的容器 -->
-                                        <textarea id="zhuo-container" name="content" type="text/plain" ></textarea>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger btn-save-submit" type="button">Save</button>
-                                        <button class="btn btn-default btn-clear-submit" type="button">Cancel</button>
+                                        <button class="btn btn-danger btn-save-submit" type="button">保存</button>
+                                        <button class="btn btn-default btn-clear-submit" type="button">删除</button>
                                     </div>
                                 </div>
                             </form>
@@ -176,10 +143,6 @@
     <script src="/static/admin/js/zhuo-common.js"></script>
     
 <script type="text/javascript" src="/static/admin/js/jquery.validate.min.js"></script>
-
-<!--script for this page-->
-<script src="/static/admin/js/messages_zh.min.js"></script>
-<!--<script src="/static/admin/js/form-validation-script.js"></script>-->
 
 <!--引入webuploaderJS-->
 <script type="text/javascript" src="/static/admin/lib/webuploader/webuploader.js"></script><script type="text/javascript" src="/static/admin/lib/webuploader/feiy_upload.js"></script>
@@ -231,12 +194,13 @@
         return params;
     }
 
+    // 图片上传
     feiy_upload.init({
         wrap:$("#uploader"),
         filePicker: $("#uploader").find(".filePicker"),
         uploadId: "#uploader",
         server: config.upload_server,
-        fileNumLimit: 5
+        fileNumLimit: 1
     });
 
 
@@ -245,39 +209,38 @@
         $("#signupForm").validate({
             rules: {
                 name: "required",
-//                main_img_url: "required",
-                price: {
+                img_id: "required",
+                key_word: {
                     required: true,
-                    min: 0,
-                    digits:true
+                    digits:true,
+                    min:1
                 },
-                stock: {
-                    required: true,
-                    min: 0,
-                    digits:true
-                },
-                summary: 'required',
-                content: "required"
+                banner_id: 'required',
             },
             messages: {
                 name: "标题不能为空",
-//                main_img_url: "图片不能为空",
-                price: "价格必须是正数",
-                stock: "库存必须是正整数",
-                summary: "摘要不能为空",
-                content: "内容不能为空"
+                img_id: "图片不能为空",
+                key_word: "id不能为空,不能小于1",
+                banner_id: "轮播图位不能为空",
             },
             submitHandler: function(form){
                 // 获取产品详情页
                 var $img_list_childs = $("#uploader .filelist > li");
-                var img_str = setUpdateUrl($img_list_childs,'src','',1);
                 var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
-                console.log(imgs_id);
-                params = "&img_str="+img_str+"&img_id="+imgs_id;
+                if(imgs_id == 'undefined'){
+                    kzLoading({
+                        content:'图片不存在，或者更改图片名称重新上传'
+                    });
+                    return ;
+                }
+
+                var banner_id = $("select.form-control").val();
+
+                params = "&img_id="+imgs_id;
                 reqAjaxJson.init({
                     url: "<?php echo Url('save'); ?>",
                     reqData: $('#signupForm').serialize()+params,
-                    redirectP: "/product"
+                    redirectP: "/BannerItem?banner_id="+banner_id
                 });
             }
         });
@@ -285,22 +248,6 @@
 
 
 </script>
-<!-- 配置文件 -->
-<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.config.js"></script>
-<!-- 编辑器源码文件 -->
-<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.all.min.js"></script>
-
-<script>
-    //注意：设置编辑器属性要在初始化编辑器之前设置，否则无效果
-    window.UEDITOR_CONFIG.initialFrameHeight = 560; //设置编辑框的高度
-    //设置编辑器高度不自动加高
-    window.UEDITOR_CONFIG.autoHeightEnabled=false;
-    //禁止显示元素路径
-    window.UEDITOR_CONFIG.elementPathEnabled = false;
-    //实例化编辑器
-    var ue = UE.getEditor('zhuo-container');
-</script>
-
 
 
 

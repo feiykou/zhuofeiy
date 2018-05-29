@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:70:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\product\add.html";i:1527241426;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:71:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\article\edit.html";i:1527241386;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +8,8 @@
 <meta name="description" content="">
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
-
+<!--引入webuploaderCss-->
+<link href="/static/admin/lib/webuploader/webuploader.css" rel="stylesheet">
 
 
     <link rel="shortcut icon" href="img/favicon.html">
@@ -30,9 +31,6 @@
     <script src="/static/admin/js/respond.min.js"></script>
     <![endif]-->
     
-<!--引入webuploaderCss-->
-<link href="/static/admin/lib/webuploader/webuploader.css" rel="stylesheet">
-
 </head>
 <body>
     <section id="container" class="">
@@ -46,102 +44,66 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        添加商品
+                        编辑文章
                     </header>
                     <div class="panel-body">
                         <div class="form">
-                            <form class="cmxform form-horizontal tasi-form" id="signupForm">
+                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="post" action="<?php echo Url('artEditUpdate',['id'=>$artData['id']]); ?>" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="<?php echo $artData['id']; ?>">
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-1">标题</label>
+                                    <label for="art_title" class="control-label col-lg-1">标题</label>
                                     <div class="col-lg-10">
-                                        <input class=" form-control" name="name" type="text" />
+                                        <input class=" form-control" name="name" type="text" value="<?php echo $artData['name']; ?>" />
                                     </div>
                                 </div>
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-1">分类</label>
+                                    <label for="art_category_id" class="control-label col-lg-1">分类</label>
                                     <div class="col-lg-2">
-                                        <select class="form-control" name="art_cate_id">
+                                        <select class="form-control" name="category_id">
                                             <option value='0'>顶级分类</option>
                                             <?php if(is_array($cateArr) || $cateArr instanceof \think\Collection || $cateArr instanceof \think\Paginator): $i = 0; $__LIST__ = $cateArr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?>
-                                            <option value='<?php echo $data['id']; ?>'><?php echo str_repeat('--',$data['level'] *2); ?> <?php echo $data['name']; ?></option>
+                                            <option value='<?php echo $data['id']; ?>' <?php if($data['id'] == $artData['category_id']): ?> selected="selected"<?php endif; ?>><?php echo str_repeat('--',$data['level'] *2); ?> <?php echo $data['name']; ?></option>
                                             <?php endforeach; endif; else: echo "" ;endif; ?>
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-1">价格</label>
-                                    <div class="col-lg-1">
-                                        <input class=" form-control" name="price" type="text" />
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">库存量</label>
-                                    <div class="col-lg-1">
-                                        <input class="form-control" name="stock" type="text" />
-                                    </div>
-                                </div>
-                                <style>
-                                    .radio-item span{
-                                        display: inline-block;
-                                        margin: 0 20px 0 3px;
-                                        vertical-align: middle;
-                                    }
-                                    .sum-info{
-                                        -webkit-box-sizing: border-box;
-                                        -moz-box-sizing: border-box;
-                                        box-sizing: border-box;
-                                        padding: 10px;
-                                        border-color: #e2e2e4;
-                                    }
-                                </style>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">推荐位</label>
-                                    <div class="col-lg-10 radio-item">
-                                        <label><input type="radio" style="width: 20px" value="1" checked="checked" class="radio form-control" name="attributes" /><span>推荐</span></label>
-                                        <label><input type="radio" style="width: 20px" value="2" class="radio form-control" name="attributes" /><span>新上</span></label>
-                                        <label><input type="radio" style="width: 20px" value="3" class="radio form-control" name="attributes" /><span>热卖</span></label>
-                                        <label><input type="radio" style="width: 20px" value="4" class="radio form-control" name="attributes" /><span>促销</span></label>
-                                        <label><input type="radio" style="width: 20px" value="5" class="radio form-control" name="attributes" /><span>包邮</span></label>
-                                        <label><input type="radio" style="width: 20px" value="6" class="radio form-control" name="attributes" /><span>限时卖</span></label>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">摘要</label>
-                                    <div class="col-lg-10">
-                                        <textarea class="sum-info" name="summary" cols="160" rows="5" placeholder="摘要信息"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">是否上架</label>
-                                    <div class="col-lg-1 radio-item">
-                                        <label><input type="radio" style="width: 20px" checked class="radio form-control" value="0" name="status" /><span>上架</span></label>
-                                        <label><input type="radio" style="width: 20px" class="radio form-control" name="status" value="1" /><span>下架</span></label>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">图片上传</label>
+                                    <label for="art_img_url" class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
                                                     <div id="uploader" class="uploader-item">
                 <div class="uploader_btns">
-                    <div class="filePicker"></div><div class="uploadBtn">上传产品图</div>
+                    <div class="filePicker"></div><div class="uploadBtn">上传缩略图</div>
                 </div>
                 <!--用来存放item-->
-                <div class="queueList"></div>
+                <div class="queueList">
+                                        <ul class="filelist filelist-exist clearfix">
+                                            <?php if(is_array($imgUrlArr) || $imgUrlArr instanceof \think\Collection || $imgUrlArr instanceof \think\Paginator): $i = 0; $__LIST__ = $imgUrlArr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$img_url): $mod = ($i % 2 );++$i;?>
+                                            <li class="item state-complete" data-src="<?php echo $img_url['url']; ?>" data-img_id="<?php echo $img_url['id']; ?>">
+                                                <p class="imgWrap"><img src="<?php echo $img_url['url']; ?>" width="110" height="110"></p>
+                                                <div class="file-panel"><span class="cancel">删除</span></div>
+                                                <span class="success"></span>
+                                            </li>
+                                            <?php endforeach; endif; else: echo "" ;endif; ?>
+                                        </ul>
+                                        </div>
             </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-1">排序</label>
+                                    <label for="clickNum" class="control-label col-lg-1">点击数</label>
                                     <div class="col-lg-1">
-                                        <input class=" form-control" name="reorder" type="text" />
+                                        <input class=" form-control" id="clickNum" name="click_num" type="text" value="<?php echo $artData['click_num']; ?>" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-lg-1">文章编辑</label>
+                                    <label for="editor" class="control-label col-lg-1">文章编辑</label>
                                     <div class="col-lg-10">
                                         <!-- 加载编辑器的容器 -->
-                                        <textarea id="zhuo-container" name="content" type="text/plain" ></textarea>
+                                        <textarea id="zhuo-container" name="content" type="text/plain" style="width: 100%; height: 350px; overflow-y:auto; ">
+                                            <?php echo html_entity_decode($artData['content']); ?>
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -184,16 +146,35 @@
 <!--引入webuploaderJS-->
 <script type="text/javascript" src="/static/admin/lib/webuploader/webuploader.js"></script><script type="text/javascript" src="/static/admin/lib/webuploader/feiy_upload.js"></script>
 
+
 <script type="text/javascript">
     var config = {
         "upload_server": "<?php echo url('getSaveNameImg'); ?>",
     };
+    $(".filelist-exist").parents(".queueList").css({
+        'display': 'block',
+        'opacity': 1
+    });
+    $(".filelist-exist").find("li").hover(function(){
+        $(this).find(".file-panel").stop(true).animate({height:"30px"},300);
+    },function(){
+        $(this).find(".file-panel").stop(true).animate({height:0},300);
+    });
+
+    $(".filelist-exist").on("click","span.cancel",function(){
+        $li = $(this).parents("li");
+        $parents = $li.parents('.filelist-exist');
+        $li.remove();
+        if($parents.find("li").length == 0){
+            $parents.remove();
+        }
+    });
+
 
     $(".btn-save-submit").on("click",function(){
         $(this).submit();
     });
 
-    // 表单清除数据
     $(".btn-clear-submit").on("click",function(){
         $(':input','#signupForm')
             .not(':button,:submit,:reset,:hidden')   //将myform表单中input元素type为button、submit、reset、hidden排除
@@ -201,7 +182,6 @@
             .removeAttr('checked')
             .removeAttr('checked'); // 如果任何radio/checkbox/select inputs有checked or selected 属性，将其移除
     });
-
 
     /**
      *
@@ -231,57 +211,48 @@
         return params;
     }
 
-    feiy_upload.init({
-        wrap:$("#uploader"),
-        filePicker: $("#uploader").find(".filePicker"),
-        uploadId: "#uploader",
-        server: config.upload_server,
-        fileNumLimit: 5
-    });
-
-
-    // 表单验证
     $(document).ready(function(){
         $("#signupForm").validate({
             rules: {
                 name: "required",
-//                main_img_url: "required",
-                price: {
+                category_id: "required",
+                click_num: {
                     required: true,
                     min: 0,
                     digits:true
                 },
-                stock: {
-                    required: true,
-                    min: 0,
-                    digits:true
-                },
-                summary: 'required',
                 content: "required"
             },
             messages: {
                 name: "标题不能为空",
-//                main_img_url: "图片不能为空",
-                price: "价格必须是正数",
-                stock: "库存必须是正整数",
-                summary: "摘要不能为空",
+                click_num: "点击数必须是正整数并且不能为空",
                 content: "内容不能为空"
             },
             submitHandler: function(form){
                 // 获取产品详情页
                 var $img_list_childs = $("#uploader .filelist > li");
-                var img_str = setUpdateUrl($img_list_childs,'src','',1);
+                var imgs_url = setUpdateUrl($img_list_childs,'src','',1);
                 var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
-                console.log(imgs_id);
-                params = "&img_str="+img_str+"&img_id="+imgs_id;
+                params = "&img_url="+imgs_url+"&img_id="+imgs_id;
+                console.log(params);
                 reqAjaxJson.init({
                     url: "<?php echo Url('save'); ?>",
                     reqData: $('#signupForm').serialize()+params,
-                    redirectP: "/product"
+                    redirectP: "/artlist"
                 });
             }
         });
     });
+
+
+    feiy_upload.init({
+        wrap:$("#uploader"),
+        filePicker: $("#uploader").find(".filePicker"),
+        uploadId: "#uploader",
+        server: config.upload_server,
+        fileNumLimit: 3
+    });
+
 
 
 </script>

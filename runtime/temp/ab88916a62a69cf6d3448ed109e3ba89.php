@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:69:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\index\main.html";i:1525923036;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:69:"F:\phpStudy\WWW\zhuo\public/../application/admin\view\index\main.html";i:1527241880;s:60:"F:\phpStudy\WWW\zhuo\application\admin\view\public\base.html";i:1526017104;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -344,6 +344,9 @@
 
 <!-- 折线图 -->
 <script src="/static/admin/js/sparkline-chart.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/admin/lib/Ueditor/ueditor.all.min.js"></script>
 
 </body>
 </html>

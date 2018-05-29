@@ -13,7 +13,5 @@ use think\Model;
 
 class Banner extends Model
 {
-    public function banner_item(){
-        return $this->hasMany('BannerItem','banner_id','id');
-    }
+
 }

@@ -95,20 +95,19 @@ class Common extends Controller
             $info = $file->move('img','');
 //            $info = $file->move('upload',true,false);
             if($info){
-                $img_url = DS . 'img' . DS . $info->getSaveName();
+//                $img_url = DS . 'img' . DS . $info->getSaveName();
+                $img_url = $info->getSaveName();
             }
         }
-
         if(!empty($img_url)){
             $img_id = Image::addImg($img_url);
             $param = [
                 "img_id"  => $img_id,
                 "img_url" => $img_url
             ];
-
-            return $this->result($param,'1','上传成功','json');
+            $this->result($param,'1','上传成功','json');
         }else{
-            return $this->result('','2','上传失败','json');
+            $this->result('','2','上传失败','json');
         }
     }
 
