@@ -4,27 +4,62 @@
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
 <style>
+    .form-signin{
+        padding-top: 100px;
+        margin: 0 auto!important;
+        background: transparent!important;
+    }
     .form-signin .form-code{
         display: inline-block;
         width: 40%;
         vertical-align: top;
     }
+    .login-wrap{
+        background: #fff;
+    }
+    .footer{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        line-height: 60px;
+        min-height: 60px;
+        background: #666;
+        text-align: center;
+    }
+    .footer a{
+        color: #fff;
+    }
+    .footer a:hover{
+        color: #ccc;
+    }
+    #container{
+        position: relative;
+    }
+
 </style>
 {/block}
 
 
 {block name="content"}
 <form class="form-signin" method="post" action="{:url('getLogin')}">
-    <h2 class="form-signin-heading">后台入口</h2>
     <div class="login-wrap">
-        <input type="text" class="form-control" name="name" placeholder="用户名" autofocus>
-        <input type="password" class="form-control" name="passwords" placeholder="密码">
-        <div>
-            <input type="text" class="form-control form-code" name="code">
-            <img src="{:url('setCode')}" onclick="this.src='{:url("setCode")}'" alt="captcha">
+        <h2 class="form-signin-heading">后台入口</h2>
+        <div class="login-wrap">
+            <input type="text" class="form-control" name="name" placeholder="用户名" autofocus>
+            <input type="password" class="form-control" name="passwords" placeholder="密码">
+            <div>
+                <input type="text" class="form-control form-code" name="code">
+                <img src="{:url('setCode')}" onclick="this.src='{:url("setCode")}'" alt="captcha">
+            </div>
+            <button class="btn btn-lg btn-login btn-block" type="submit">登录</button>
+            <p>欢迎进入后台系统</p>
         </div>
-        <button class="btn btn-lg btn-login btn-block" type="submit">登录</button>
-        <p>欢迎进入后台系统</p>
     </div>
 </form>
+
+<div class="footer">
+    <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备18050041号 </a>
+</div>
 {/block}

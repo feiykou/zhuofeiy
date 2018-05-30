@@ -101,12 +101,9 @@ class Common extends Controller
             $info = $file->move('img','');
 //            $info = $file->move('upload',true,false);
             if($info){
-<<<<<<< HEAD
-//                $img_url = DS . 'img' . DS . $info->getSaveName();
+//              $img_url = DS . 'img' . DS . $info->getSaveName();
                 $img_url = $info->getSaveName();
-=======
                 $img_url = DS . $info->getSaveName();
->>>>>>> be9a41ac67b1a6b5125bac50392e8813c52e6b76
             }
         }
         if(!empty($img_url)){
