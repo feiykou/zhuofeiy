@@ -13,5 +13,6 @@ return [
     // 路由使用完整匹配
     'route_complete_match'   => true,
     // 数据集返回类型
-    'resultset_type'         => 'collection'
+    'resultset_type'         => 'collection',
+    'datetime_format' => 'Y-m-d H:i:s'
 ];

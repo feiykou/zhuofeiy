@@ -13,7 +13,7 @@ use think\Model;
 
 class Image extends BaseModel
 {
-    protected $hidden = ['delete_time','update_time','id','from'];
+    protected $hidden = ['delete_time','update_time','id','from','pivot','status','create_time'];
 
     // 自动添加图片链接前缀
     public function getUrlAttr($value, $data){
