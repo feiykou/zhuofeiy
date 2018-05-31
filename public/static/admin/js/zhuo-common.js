@@ -132,6 +132,11 @@ var loadPage = {
     }
 };
 
+$(".filelist-exist").parents(".queueList").css({
+    'display': 'block',
+    'opacity': 1
+});
+
 
 
 

@@ -17,11 +17,11 @@ class Article extends BaseModel
     public function getImgUrlAttr($value){
         return $this->prefixImgUrl($value);
     }
-
+    // 关联一对多
     public function art_img(){
         return $this->hasMany('ArticleImage','article_id','id');
     }
-
+    // 添加图片
     public function addArticleData($data){
         $artModel = self::create($data);
         if($artModel){
@@ -31,7 +31,7 @@ class Article extends BaseModel
         }
         return $result;
     }
-
+    // 更新图片
     public function updateArtData($data){
         $id = intval($data['id']);
         $img_ids = self::where('id','=',$id)->value('img_id');
