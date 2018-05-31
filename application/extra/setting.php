@@ -7,9 +7,9 @@
  */
 
 return [
-    'http_prefix' => 'http://zhuo.cn/',
-    'api_img_prefix' => 'img',
-    'api_img_prefix' => 'static/api/images',
+    'http_prefix' => 'https://konlyz.com/',
+    'api_img_prefix' => 'img/',
+//    'api_img_prefix' => 'static/api/images',
     'admin_img_prefix' => 'img/',
     'token_expire_in'  => 7200
 ];
