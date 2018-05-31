@@ -17,4 +17,16 @@ class BannerItem extends Model
     public function img(){
         return $this->belongsTo('Image','img_id','id');
     }
+
+    /**
+     * 返回指定id的banner信息
+     * @relativeModel BannerItem，image
+     * @param $id
+     */
+    public static function getBannerByID($banner_id){
+        $banner = self::with(['img'])
+            ->where('banner_id','=',$banner_id)
+            ->select();
+        return $banner;
+    }
 }
