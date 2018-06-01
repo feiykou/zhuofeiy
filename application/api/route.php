@@ -12,6 +12,7 @@ Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
 
 // 文章
 Route::get('api/:version/article','api/:version.Article/getArticle');
+Route::get('api/:version/article/:id','api/:version.Article/getArticleById');
 
 
 // 获取多个主题，参数是ids

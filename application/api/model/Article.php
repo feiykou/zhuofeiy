@@ -41,4 +41,13 @@ class Article extends BaseModel
         return $result;
     }
 
+    public static function getOneArtById($id){
+        $data = [
+            'id' => $id
+        ];
+
+        $result = self::where($data)->find();
+        return $result;
+    }
+
 }
