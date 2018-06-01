@@ -13,7 +13,7 @@ use think\Model;
 
 class Image extends Model
 {
-    protected $hidden = ['delete_time','create_time','update_time','id','status'];
+    protected $hidden = ['delete_time','create_time','update_time','status'];
 
     public function getUrlAttr($value){
         $finaUrl = $value;
