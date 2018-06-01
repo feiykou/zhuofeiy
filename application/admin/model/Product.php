@@ -23,6 +23,10 @@ class Product extends Model
         return $this->hasMany('productImage','product_id','id');
     }
 
+    public function getMainImgUrlAttr($value,$data){
+        return $this->prefixImgUrl($value,$data);
+    }
+
 //    public function cate(){
 //        return $this->belongsTo('ArtCate','art_cate_id','id');
 //    }
