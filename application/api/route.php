@@ -25,7 +25,7 @@ Route::get('api/:version/product/recent','api/:version.Product/getRecent');
 
 //提供分类id，获取对应的所有产品
 Route::get('api/:version/product/by_cate','api/:version.Product/getAllInCate');
-Route::get('api/:version/product/:id','api/:version.Product/getOne');
+Route::get('api/:version/product/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
 
 
 // 获取分类的全部数据
