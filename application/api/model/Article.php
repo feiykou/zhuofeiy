@@ -11,7 +11,7 @@ namespace app\api\model;
 
 class Article extends BaseModel
 {
-    protected $hidden = ['delete_time','update_time','create_time','category_id','user_id','status','img_id'];
+    protected $hidden = ['delete_time','update_time','category_id','user_id','status','img_id'];
 
 
     public function cate(){
