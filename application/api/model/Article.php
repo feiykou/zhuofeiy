@@ -23,6 +23,11 @@ class Article extends BaseModel
         return $this->belongsToMany('Image','article_image','img_id','article_id');
     }
 
+    // 自动添加图片链接前缀
+    public function getImgUrlAttr($value, $data){
+        return $this->prefixImgUrl($value, $data);
+    }
+
     public static function getAllArticle(){
         $order = [
             'id' => 'desc'

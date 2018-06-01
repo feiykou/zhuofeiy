@@ -51,6 +51,8 @@ class Article extends Common
         $cateData = Cate::all();
         $sortArr = sortData($cateData);
         $this->assign('cateArr',$sortArr);
+        $imgTypeArr = config('attributes.img_type');
+        $this->assign('imgTypeArr',$imgTypeArr);
         return $this->fetch();
     }
 
@@ -86,6 +88,8 @@ class Article extends Common
     function edit($id){
         $getData = $this->model->getDataById($id);
         $cateData = $this->model->getAllCateData();
+        $imgTypeArr = config('attributes.img_type');
+        $this->assign('imgTypeArr',$imgTypeArr);
 
         $imgUrlArr = model('image')->where(['id'=>['in',$getData['img_id']]])->select();
         return $this->fetch('',[
@@ -113,6 +117,7 @@ class Article extends Common
             'content'       =>      empty($data['content'])?'':$data['content'],
             'click_num'     =>      $data['click_num'],
             'img_id'        =>      $data['img_id'],
+            'img_type'      =>      $data['img_type'],
             'user_id'       =>      $this->getUserId()
         ];
         $is_exist_id = empty($data['id']);
