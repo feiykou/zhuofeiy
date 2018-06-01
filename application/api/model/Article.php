@@ -46,7 +46,9 @@ class Article extends BaseModel
             'id' => $id
         ];
 
-        $result = self::where($data)->find();
+        $result = self::where($data)
+            ->with('cate')
+            ->find();
         return $result;
     }
 
