@@ -132,10 +132,10 @@ class Article extends Common
         // 更新数据
         if(!$is_exist_id){
             $proData['id'] = $data['id'];
-            $proData['update_time'] = time();
+//            $proData['update_time'] = time();
             return $update = $this->update($proData);
         }
-        $proData['create_time'] = time();
+//        $proData['create_time'] = time();
         $result = $this->model->addArticleData($proData);
         if($result){
             return json(['type'=>'success','success'=>'添加成功','code'=>0]);
