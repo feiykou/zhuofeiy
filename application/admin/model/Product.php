@@ -11,7 +11,7 @@ namespace app\admin\model;
 
 use think\Model;
 
-class Product extends Model
+class Product extends BaseModel
 {
     protected $hidden = ['create_time','update_time','delete_time'];
 
