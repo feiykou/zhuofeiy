@@ -54,6 +54,12 @@
                                         <input class="form-control" name="stock" type="text" />
                                     </div>
                                 </div>
+                                <div class="form-group ">
+                                    <label class="control-label col-lg-1">缩略图</label>
+                                    <div class="col-lg-10">
+                                        {Uploader:webuploader uploadId="prothumb" filePickerId="" btnVal="上传产品图"}{/Uploader:webuploader}
+                                    </div>
+                                </div>
 
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">推荐位</label>
@@ -175,6 +181,16 @@
         return params;
     }
 
+    // 缩略图
+    feiy_upload.init({
+        wrap:$("#prothumb"),
+        filePicker: $("#prothumb").find(".filePicker"),
+        uploadId: "#prothumb",
+        server: config.upload_server,
+        fileNumLimit: 1
+    });
+
+    // 产品图
     feiy_upload.init({
         wrap:$("#uploader"),
         filePicker: $("#uploader").find(".filePicker"),
@@ -182,6 +198,7 @@
         server: config.upload_server,
         fileNumLimit: 5
     });
+
 
 
     // 表单验证
@@ -212,12 +229,26 @@
                 content: "内容不能为空"
             },
             submitHandler: function(form){
-                // 获取产品详情页
+                // 获取详情页图片详情
                 var $img_list_childs = $("#uploader .filelist > li");
-                var img_str = setUpdateUrl($img_list_childs,'src','',1);
-                var imgs_id = setUpdateUrl($img_list_childs,'img_id',",");
-                console.log(imgs_id);
-                params = "&img_str="+img_str+"&img_id="+imgs_id;
+//                var img_str = setUpdateUrl($img_list_childs,'src','',1);
+                var img_detail_id = setUpdateUrl($img_list_childs,'img_id',",");
+
+                // 获取产品缩略图
+                var $main_img = $("#prothumb .filelist > li");
+                var main_img_src = setUpdateUrl($main_img,'src','',1);
+                var img_id = setUpdateUrl($main_img,'img_id',",",1);
+
+                /**
+                 *
+                 * img_detail_ids：产品详情图片id
+                 * main_img_url：产品详情缩略图链接
+                 * img_id：产品详情缩略图id
+                 *
+                 */
+                params = "&img_detail_ids="+img_detail_id+"&main_img_url="+main_img_src+"&img_id="+img_id;
+                console.log(params);
+
                 reqAjaxJson.init({
                     url: "{:Url('save')}",
                     reqData: $('#signupForm').serialize()+params,

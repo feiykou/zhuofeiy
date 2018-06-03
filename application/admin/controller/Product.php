@@ -46,10 +46,9 @@ class Product extends Common
             $this->error("请求失败");
         }
 
-
         $product = $this->model;
         $data = request()->post();
-
+        var_dump($data);die;
         $username = session('username','','admin');
         $proData = [
             'name'         =>  $data['name'],
@@ -63,9 +62,8 @@ class Product extends Common
             'reorder'      =>  empty($data['reorder']) ? '' : $data['reorder'],
             'publisher'    =>  empty($username) ? 'admin' : $username,
             'img_id'       =>  $data['img_id'],
-            'main_img_url' =>  explode(';',$data['img_str'])[0]
+            'main_img_url' =>  $data['main_img_src']
         ];
-
 
         $is_exist_id = empty($data['id']);
         //判断是否存在同名
@@ -95,7 +93,6 @@ class Product extends Common
             }else{
                 return json(['type'=>'success','success'=>"添加失败2！","code"=>1]);
             }
-
         }else{
             return json(['type'=>'error','error'=>"添加失败！","code"=>1]);
         }
