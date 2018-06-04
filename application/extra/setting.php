@@ -7,7 +7,7 @@
  */
 
 return [
-    'http_prefix' => 'https://konlyz.com/',
+    'http_prefix' => 'https://www.konlyz.com/',
     'api_img_prefix' => 'img/',
 //    'api_img_prefix' => 'static/api/images',
     'admin_img_prefix' => 'img/',

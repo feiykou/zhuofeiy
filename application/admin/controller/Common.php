@@ -79,20 +79,20 @@ class Common extends Controller
         return $this->account;
     }
 
-    public function getImg(){
-        if($_FILES['file']['tmp_name']){
-            $file = request()->file('file');
-            $info = $file->move('upload');
-            if($info){
-                $img_url = DS . 'upload' . DS . $info->getSaveName();
-            }
-        }
-        if(!empty($img_url)){
-            return $this->result($img_url,'1','上传成功','json');
-        }else{
-            return $this->result('','2','上传失败','json');
-        }
-    }
+//    public function getImg(){
+//        if($_FILES['file']['tmp_name']){
+//            $file = request()->file('file');
+//            $info = $file->move('upload');
+//            if($info){
+//                $img_url = DS . 'upload' . DS . $info->getSaveName();
+//            }
+//        }
+//        if(!empty($img_url)){
+//            return $this->result($img_url,'1','上传成功','json');
+//        }else{
+//            return $this->result('','2','上传失败','json');
+//        }
+//    }
 
     public function getSaveNameImg(){
         if($_FILES['file']['tmp_name']){
@@ -102,7 +102,7 @@ class Common extends Controller
 //            $info = $file->move('upload',true,false);
             if($info){
 //              $img_url = DS . 'img' . DS . $info->getSaveName();
-                $img_url = $info->getSaveName();
+//                $img_url = $info->getSaveName();
                 $img_url = DS . $info->getSaveName();
             }
         }

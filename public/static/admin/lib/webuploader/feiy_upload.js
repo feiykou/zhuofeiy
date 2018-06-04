@@ -9,7 +9,7 @@ var feiy_upload = {
         setTimeout(function(){
             var uploader = that.createUploader(opts);
             that.uploadFn($,opts,uploader);
-        },5*that.upload_time);
+        },100*that.upload_time);
         this.upload_time++;
     },
     createUploader: function(opts){
@@ -299,9 +299,11 @@ var feiy_upload = {
                     }
 
                     if (isSupportBase64) {
+                        console.log(1);
                         img = $('<img src="' + src + '">');
                         $wrap.empty().append(img);
                     } else {
+                        console.log(2);
                         $.ajax(opts.server, {
                             method: 'POST',
                             data: src,
@@ -633,13 +635,15 @@ var feiy_upload = {
         // 文件上传成功
         var $img_url = '';
         uploader.on('uploadSuccess', function (file, ret) {
+
             if (ret.code == 1) {
                 var $img_id_box = $('#' + file.id);
                 $img_id_box.data("src", ret.data.img_url);
-
+                console.log(ret.data);
                 if(ret.data.img_id){
                     $img_id_box.data("img_id", ret.data.img_id);
                 }
+
             } else {
                 var $img_id_box = $('#' + file.id);
                 $img_id_box.data("src", '');

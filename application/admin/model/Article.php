@@ -38,6 +38,8 @@ class Article extends BaseModel
         $artModel = self::update($data,['id' => $id]);
         if($artModel){
             $result = self::saveImg($artModel,$img_ids);
+        }else{
+            $result = false;
         }
         return $result;
     }
