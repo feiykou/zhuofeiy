@@ -9,6 +9,7 @@
 namespace app\admin\model;
 
 
+use think\Db;
 use think\Model;
 
 class Product extends BaseModel
@@ -34,11 +35,59 @@ class Product extends BaseModel
 //        return $this->belongsTo('ArtCate')->field('name as pname');
 //    }
 
+
     public function getProductDetail($id){
         $product = self::with(['item','item.img'])->find($id);
         return $product;
     }
 
+
+    // 添加图片
+    public function addProductData($data,$img_detail_ids){
+        $proModel = self::create($data);
+        if($proModel){
+            $result = self::saveImg($proModel,$img_detail_ids);
+        }else{
+            $result = false;
+        }
+        return $result;
+    }
+    // 更新图片
+    public function updateProData($data,$img_detail_ids){
+        $id = intval($data['id']);
+        $proModel = self::update($data,['id' => $id]);
+        if($proModel){
+            $result = self::saveImg($proModel,$img_detail_ids);
+        }else{
+            $result = false;
+        }
+        return $result;
+    }
+
+    // 保存图片
+    private static function saveImg($proModel,$addData){
+        $pro_id = $proModel->id;
+        $img_id_arr = explode(',',$addData);
+        $img_arr = [];
+        foreach ($img_id_arr as $value){
+            $img_arr[]['img_id'] = $value;
+        }
+        Db::startTrans();
+        try{
+            model('productImage')
+                ->where('product_id','=',$pro_id)
+                ->delete();
+            $result = $proModel->item()->saveAll($img_arr);
+            Db::commit();
+        }catch (Exception $ex){
+            Db::rollback();
+            throw $ex;
+        }
+
+        return $result;
+    }
+
+    // 获取图片的id和url，返回数组
     public function getimgArrByProduct($product){
         $itemArr = $product->item;
         $imgArr = [];
@@ -53,6 +102,7 @@ class Product extends BaseModel
         return $imgArr;
     }
 
+    // 获取图片的url
     public function getImgUrlArr($img_url){
         $img_url = trim($img_url,';');
         $img_data = explode(";",$img_url);
@@ -72,18 +122,18 @@ class Product extends BaseModel
      * @return false|int
      * @throws \think\exception\DbException
      */
-    public function saveImg($pro_id,$img_ids,$mark=false){
-//        $data = $this->getImgUrlArr($img_url);
-        $img_id_arr = explode(',',$img_ids);
-        $mark && self::get($pro_id)->imgs()->detach();
-        $result = self::get($pro_id)->imgs()->saveAll($img_id_arr);
-//        $imgModelData = Product::get($pro_id)->imgs;
-//        $result = self::get($pro_id)->save([
-////            'main_img_url' => $imgModelData[0]['url'],
-////            'img_id'       => $imgModelData[0]['id']
-//        ]);
-        return $result;
-    }
+//    public function saveImg($pro_id,$img_ids,$mark=false){
+////        $data = $this->getImgUrlArr($img_url);
+//        $img_id_arr = explode(',',$img_ids);
+//        $mark && self::get($pro_id)->imgs()->detach();
+//        $result = self::get($pro_id)->imgs()->saveAll($img_id_arr);
+////        $imgModelData = Product::get($pro_id)->imgs;
+////        $result = self::get($pro_id)->save([
+//////            'main_img_url' => $imgModelData[0]['url'],
+//////            'img_id'       => $imgModelData[0]['id']
+////        ]);
+//        return $result;
+//    }
 
     public function updateImg($img_url,$pro_id){
 
