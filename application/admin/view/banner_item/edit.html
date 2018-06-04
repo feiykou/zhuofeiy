@@ -124,6 +124,21 @@
         'opacity': 1
     });
 
+    $(".filelist-exist").find("li").hover(function(){
+        $(this).find(".file-panel").stop(true).animate({height:"30px"},300);
+    },function(){
+        $(this).find(".file-panel").stop(true).animate({height:0},300);
+    });
+
+    $(".filelist-exist").on("click","span.cancel",function(){
+        $li = $(this).parents("li");
+        $parents = $li.parents('.filelist-exist');
+        $li.remove();
+        if($parents.find("li").length == 0){
+            $parents.remove();
+        }
+    });
+
 
     $(".btn-save-submit").on("click",function(){
         $(this).submit();
