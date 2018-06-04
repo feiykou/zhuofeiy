@@ -26,6 +26,13 @@ class Product extends BaseModel
         return $this->prefixImgUrl($value,$data);
     }
 
+
+    public function imgs(){
+        return $this->hasMany('ProductImage','product_id','id');
+    }
+
+
+
     /**
      * 功能：查询最近产品
      *
@@ -63,7 +70,14 @@ class Product extends BaseModel
 
 
     public static function getProductDetail($id){
-
+        $product = self::with([
+            'imgs' => function($query){
+                $query->with(['imgUrl'])
+                    ->order('id','desc');
+            }
+        ])
+            ->find($id);
+        return $product;
     }
 
 
