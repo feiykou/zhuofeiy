@@ -113,7 +113,7 @@ class Article extends BaseModel
             ->field('a1.*,a2.name as pname')
             ->order($order)
             ->join('cate a2','a1.category_id=a2.id','left')
-            ->paginate(3);
+            ->paginate(10);
         return $artData;
     }
 

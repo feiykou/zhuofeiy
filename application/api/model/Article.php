@@ -39,7 +39,7 @@ class Article extends BaseModel
         $result = self::where($data)
             ->with(['cate','img'])
             ->order($order)
-            ->paginate(10,true);
+            ->paginate(2,true);
         return $result;
     }
 
