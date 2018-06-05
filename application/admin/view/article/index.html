@@ -49,6 +49,7 @@
                             <td class="view-message">类型</td>
                             <td class="view-message">发布人</td>
                             <td class="view-message">发布时间</td>
+                            <td class="view-message">推荐位</td>
                             <td class="view-message">状态</td>
                             <td class="view-message">操作</td>
                         </tr>
@@ -72,6 +73,7 @@
                             <td class="view-message">{$art.pname}</td>
                             <td class="view-message">姚卓</td>
                             <td class="view-message">{$art.create_time}</td>
+                            <td class="view-message"><span class="btn btn-danger btn-xs">{$art.attribute}</span></td>
                             <td class="view-message td-status"><a href='javascript:void(0);' data-id="{$art.id}" data-status="{$art.status}" title="点击修改状态">{$art.status|status}</a></td>
                             <td class="view-message">
                                 <button class="btn btn-primary btn-xs"><a href="{:url('edit',['id'=>$art.id])}" style="color: #fff;"><i class="icon-pencil "></i></a></button>

@@ -35,6 +35,10 @@ class Article extends Common
     function index(){
         $artData = $this->model->getAllArtData();
         $page = $artData->render();
+        $artData->each(function($data){
+            $attr_index = $data['attribute'];
+            $data['attribute'] = config('attributes.article_attr')[$attr_index];
+        });
         $this->assign('artData',$artData);
         return $this->fetch('',['page'=>$page]);
     }

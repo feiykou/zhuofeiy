@@ -42,7 +42,7 @@
                                     <label class="control-label col-lg-1">推荐位</label>
                                     <div class="col-lg-10 radio-item">
                                         {volist name="article_attr" id="bitType" key="k"}
-                                        <label><input type="radio" style="width: 20px" {if condition="$k == 1"}checked{/if} value="{$k}" class="radio form-control" name="attribute" /><span>{$bitType}</span></label>
+                                        <label><input type="radio" style="width: 20px" {if condition="$k-1 == 0"}checked{/if} value="{$k-1}" class="radio form-control" name="attribute" /><span>{$bitType}</span></label>
                                         {/volist}
                                     </div>
                                 </div>
