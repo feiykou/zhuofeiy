@@ -21,12 +21,7 @@ class Product extends Common
     }
 
     public function index(){
-        $proData = ProductModel::alias('a1')
-            ->where("deleted",'=','1')
-            ->field('a1.*,a2.name as pname')
-            ->order(['id'=>"desc"])
-            ->join('cate a2','a1.art_cate_id=a2.id','left')
-            ->paginate();
+        $proData = $this->model->getAllProData();
         $page = $proData->render();
         $this->assign('proData',$proData);
         return $this->fetch('',['page'=>$page]);
@@ -58,8 +53,6 @@ class Product extends Common
             'summary'      =>  $data['summary'],
             'content'      =>  $data['content'],
             'attributes'   =>  $data['attributes'],
-            'status'       =>  $data['status'],
-            'reorder'      =>  empty($data['reorder']) ? '' : $data['reorder'],
             'publisher'    =>  empty($username) ? 'admin' : $username,
             'img_id'       =>  $data['img_id'],
             'main_img_url' =>  $data['main_img_url']

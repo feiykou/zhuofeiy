@@ -33,12 +33,7 @@ class Article extends Common
      * @return mixed
      */
     function index(){
-        $artData = ArticleModel::alias('a1')
-            ->where("status",'=','1')
-            ->field('a1.*,a2.name as pname')
-            ->order(['id'=>"desc"])
-            ->join('cate a2','a1.category_id=a2.id','left')
-            ->paginate(10);
+        $artData = $this->model->getAllArtData();
         $page = $artData->render();
         $this->assign('artData',$artData);
         return $this->fetch('',['page'=>$page]);
@@ -50,9 +45,13 @@ class Article extends Common
     function add(){
         $cateData = Cate::all();
         $sortArr = sortData($cateData);
-        $this->assign('cateArr',$sortArr);
         $imgTypeArr = config('attributes.img_type');
-        $this->assign('imgTypeArr',$imgTypeArr);
+        $article_attr = config('attributes.article_attr');
+        $this->assign([
+            'cateArr' => $sortArr,
+            'imgTypeArr' => $imgTypeArr,
+            'article_attr' => $article_attr
+        ]);
         return $this->fetch();
     }
 
@@ -89,13 +88,14 @@ class Article extends Common
         $getData = $this->model->getDataById($id);
         $cateData = $this->model->getAllCateData();
         $imgTypeArr = config('attributes.img_type');
-        $this->assign('imgTypeArr',$imgTypeArr);
-
+        $article_attr = config('attributes.article_attr');
         $imgUrlArr = model('image')->where(['id'=>['in',$getData['img_id']]])->select();
         return $this->fetch('',[
             'artData'=>$getData,
             'cateArr'=>$cateData,
-            'imgUrlArr' => $imgUrlArr
+            'imgUrlArr' => $imgUrlArr,
+            'imgTypeArr' => $imgTypeArr,
+            'article_attr' => $article_attr
         ]);
     }
 
@@ -118,6 +118,7 @@ class Article extends Common
             'click_num'     =>      $data['click_num'],
             'img_id'        =>      $data['img_id'],
             'img_type'      =>      $data['img_type'],
+            'attribute'     =>      $data['attribute'],
             'user_id'       =>      $this->getUserId(),
         ];
         $is_exist_id = empty($data['id']);

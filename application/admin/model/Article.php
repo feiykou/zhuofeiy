@@ -73,7 +73,9 @@ class Article extends BaseModel
     public function removeDataById($id=0){
         $data = [
             'id' => $id,
-            'status' => 1
+            'status' => [
+                'neq' => 0
+            ]
         ];
 
         $result = $this->where($data)->update(['status'=>0]);
@@ -92,6 +94,29 @@ class Article extends BaseModel
         return $result;
     }
 
+
+    /**
+     * 获取全部数据
+     */
+    public function getAllArtData(){
+        $where = [
+            'status'=>['neq',0]
+        ];
+
+        $order = [
+            'order' => 'desc',
+            'id' => 'desc'
+        ];
+
+        $artData = self::alias('a1')
+            ->where($where)
+            ->field('a1.*,a2.name as pname')
+            ->order($order)
+            ->join('cate a2','a1.category_id=a2.id','left')
+            ->paginate(10);
+        return $artData;
+    }
+
     /**
      * 获取某条数据
      * @param int $id
@@ -100,7 +125,9 @@ class Article extends BaseModel
     public function getDataById($id=0){
         $data = [
             'id' => $id,
-            'status' => 1
+            'status' => [
+                'neq',0
+            ]
         ];
 
         $result = $this->where($data)->find();
@@ -121,7 +148,7 @@ class Article extends BaseModel
     // 判断是否存在同名
     public function is_unique($name="",$id=0){
         $data = [
-            'status'    => ['eq',1],
+            'status'    => ['neq',0],
             'id'        => ['neq',$id],
             'name'      => $name
         ];

@@ -44,10 +44,12 @@
                             <td class="view-message inbox-small-cells"></td>
                             <td class="view-message">id</td>
                             <td class="inbox-small-cells">标题</td>
-                            <td class="view-message">类型</td>
+                            <td class="view-message">排序</td>
                             <td class="view-message">图片</td>
+                            <td class="view-message">类型</td>
                             <td class="view-message">发布人</td>
                             <td class="view-message">发布时间</td>
+                            <td class="view-message">状态</td>
                             <td class="view-message">操作</td>
                         </tr>
                     </thead>
@@ -63,13 +65,18 @@
                             </td>
                             <td class="view-message">{$art.id}</td>
                             <td class="view-message">{$art.name}</td>
-                            <td class="view-message">{$art.pname}</td>
+                            <td class="view-message listorder"><input type="text" data-id="{$art.id}" value="{$art.order}"></td>
                             <td class="view-message art-img">
                                 {if condition="$art.img_url"}<a href="{$art.img_url}" target="_blank"><img src="{$art.img_url}" width="60" height="60" alt=""></a>{/if}
                             </td>
+                            <td class="view-message">{$art.pname}</td>
                             <td class="view-message">姚卓</td>
                             <td class="view-message">{$art.create_time}</td>
-                            <td class="view-message"><span class="btn btn-primary btn-xs mr10 btn-del" data-id="{$art.id}" data-toggle="modal" data-target="#del-modal">删除</span> <a href="{:url('edit',['id'=>$art.id])}" class="btn btn-primary btn-xs">编辑</a></td>
+                            <td class="view-message td-status"><a href='javascript:void(0);' data-id="{$art.id}" data-status="{$art.status}" title="点击修改状态">{$art.status|status}</a></td>
+                            <td class="view-message">
+                                <button class="btn btn-primary btn-xs"><a href="{:url('edit',['id'=>$art.id])}" style="color: #fff;"><i class="icon-pencil "></i></a></button>
+                                <button class="btn btn-danger btn-xs" data-id="{$art.id}" data-toggle="modal" data-target="#del-modal"><i class="icon-trash"></i></button>
+                            </td>
                         </tr>
                         {/volist}
 
@@ -112,6 +119,33 @@
 {block name="script"}
 <script type="text/javascript">
     $(function(){
+        // 改变状态
+        $(".td-status").on("click",'a',function(){
+            var id = $(this).data("id");
+            var status = $(this).data("status");
+            status = (status==1?-1:1);
+            var url = "{:url('status')}?id="+id+"&status="+status;
+            reqAjaxJson.init({
+                'url': "{:url('status')}?id="+id+"&status="+status,
+                'reqData': {},
+                'redirectP': "{:url('/artlist')}"
+            });
+
+        });
+
+        // 排序
+        $(".listorder > input").blur(function(){
+            var id = $(this).data("id");
+            var order = $(this).val();
+            var url = "{:url('order')}?id="+id+"&order="+order;
+            reqAjaxJson.init({
+                'url': url,
+                'reqData': {},
+                'redirectP': "{:url('/artlist')}"
+            });
+        });
+
+
         //全选和反选
         var $singleCheck = $(".table-inbox .checkbox_square-green");
         var $allCheck = $(".chk-all .checkbox_square-green");

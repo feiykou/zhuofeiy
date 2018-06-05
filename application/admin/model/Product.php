@@ -160,10 +160,31 @@ class Product extends BaseModel
      */
     public function getAllData(){
         $data = [
-            'deleted' => 1
+            'status' => ['neq', 0]
         ];
 
         return $this->where($data)->select();
+    }
+
+    /**
+     * 获取全部数据并查询出关联数据
+     */
+    public function getAllProData(){
+        $where = [
+            'status'=>['neq',0]
+        ];
+
+        $order = [
+            'order' => 'desc',
+            'id' => 'desc'
+        ];
+        $proData = self::alias('a1')
+            ->where($where)
+            ->field('a1.*,a2.name as pname')
+            ->order($order)
+            ->join('cate a2','a1.art_cate_id=a2.id','left')
+            ->paginate();
+        return $proData;
     }
 
 
@@ -195,7 +216,7 @@ class Product extends BaseModel
             'id' => $id,
         ];
 
-        $result = $this->where($data)->update(['deleted'=>0]);
+        $result = $this->where($data)->update(['status'=>0]);
         return $result;
     }
 
@@ -207,14 +228,14 @@ class Product extends BaseModel
         $data = [
             'id' => ['in',$idArr]
         ];
-        $result = $this->where($data)->update(['deleted'=>0]);
+        $result = $this->where($data)->update(['status'=>0]);
         return $result;
     }
 
     // 判断是否存在同名
     public function is_unique($name="",$id=0){
         $data = [
-            'deleted'    => ['eq',1],
+            'status'    => ['neq',0],
             'id'        => ['neq',$id],
             'name'      => $name
         ];

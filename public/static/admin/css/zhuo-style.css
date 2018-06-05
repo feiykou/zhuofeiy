@@ -188,3 +188,21 @@
 	padding: 10px;
 	border-color: #e2e2e4;
 }
+
+
+/*排序样式*/
+.listorder input{
+	width: 46px;
+	height: 26px;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	color: #a59e9e;
+	text-align: center;
+}
+
+/*单选*/
+.radio-item span{
+	display: inline-block;
+	margin: 0 20px 0 3px;
+	vertical-align: middle;
+}

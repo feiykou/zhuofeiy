@@ -29,7 +29,9 @@ class Article extends BaseModel
 
     public static function getAllArticle(){
         $order = [
-            'id' => 'desc'
+            'attribute' => 'desc',
+            'order'     => 'desc',
+            'id'        => 'desc'
         ];
         $data = [
             'status' => 1

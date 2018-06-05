@@ -16,6 +16,10 @@ class Article
 {
     public function getArticle(){
         $artData = ArticleModel::getAllArticle();
+        $artData->each(function($data){
+            $attr_index = $data['attribute'];
+            $data['attribute'] = config('attributes.article_attr')[$attr_index];
+        });
         if(!$artData){
             throw new ArticleException();
         }

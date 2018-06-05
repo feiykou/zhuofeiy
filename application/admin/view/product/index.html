@@ -3,16 +3,6 @@
 <meta name="description" content="">
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
-<style>
-    .reorder input{
-        width: 50px;
-        height: 31px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-        color: #a59e9e;
-        text-align: center;
-    }
-</style>
 {/block}
 
 
@@ -58,9 +48,9 @@
                             <td class="view-message">图片</td>
                             <td class="view-message">价格</td>
                             <td class="view-message">库存</td>
-                            <td class="view-message">是否上架</td>
                             <td class="view-message">分类</td>
                             <td class="view-message">发布者</td>
+                            <td class="view-message">状态</td>
                             <td class="view-message">操作</td>
                         </tr>
                     </thead>
@@ -76,13 +66,14 @@
                             </td>
                             <td class="view-message">{$data.id}</td>
                             <td class="view-message">{$data.name}</td>
-                            <td class="view-message reorder"><input type="text" value="{$data.reorder}"></td>
+                            <td class="view-message listorder"><input type="text" data-id="{$data.id}" value="{$data.order}"></td>
                             <td class="view-message">{if condition='$data.main_img_url'}<a href="{$data.main_img_url}" target="_blank"><img src="{$data.main_img_url}" width="60" height="60"></a>{else/}暂无{/if}</td>
                             <td class="view-message">{$data.price}</td>
                             <td class="view-message">{$data.stock}</td>
-                            <td class="view-message">{if condition="$data.status == 1"}上架{else/}下架{/if}</td>
+
                             <td class="view-message">{empty name="$data.pname"}暂无{else /}{$data.pname}{/empty}</td>
                             <td class="view-message">{$data.publisher}</td>
+                            <td class="view-message td-status"><a href='javascript:void(0);' data-id="{$data.id}" data-status="{$data.status}" title="点击修改状态">{$data.status|status}</a></td>
                             <td class="view-message"><span class="btn btn-primary btn-xs mr10 btn-del" data-id="{$data.id}" data-toggle="modal" data-target="#del-modal">删除</span> <a href="{:url('edit',['id'=>$data.id])}" class="btn btn-primary btn-xs">编辑</a></td>
                         </tr>
                         {/volist}
@@ -125,6 +116,31 @@
 {block name="script"}
 <script type="text/javascript">
     $(function(){
+        // 改变状态
+        $(".td-status").on("click",'a',function(){
+            var id = $(this).data("id");
+            var status = $(this).data("status");
+            status = (status==1?-1:1);
+            var url = "{:url('status')}?id="+id+"&status="+status;
+            reqAjaxJson.init({
+                'url': "{:url('status')}?id="+id+"&status="+status,
+                'reqData': {},
+                'redirectP': "{:url('/product')}"
+            });
+        });
+
+        // 排序
+        $(".listorder > input").blur(function(){
+            var id = $(this).data("id");
+            var order = $(this).val();
+            var url = "{:url('order')}?id="+id+"&order="+order;
+            reqAjaxJson.init({
+                'url': url,
+                'reqData': {},
+                'redirectP': "{:url('/product')}"
+            });
+        });
+
         //全选和反选
         var $singleCheck = $(".table-inbox .checkbox_square-green");
         var $allCheck = $(".chk-all .checkbox_square-green");

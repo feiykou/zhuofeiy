@@ -10,6 +10,21 @@
 {block name="css"}
 <!--引入webuploaderCss-->
 {uploader:webuploadercss /}
+<style>
+
+    .sum-info{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        border-color: #e2e2e4;
+    }
+
+    #uploader .queueList{
+        display: block;
+        opacity: 1;
+    }
+</style>
 {/block}
 
 {block name="content"}
@@ -68,25 +83,7 @@
                                         {/Uploader:webuploader}
                                     </div>
                                 </div>
-                                <style>
-                                    .radio-item span{
-                                        display: inline-block;
-                                        margin: 0 20px 0 3px;
-                                        vertical-align: middle;
-                                    }
-                                    .sum-info{
-                                        -webkit-box-sizing: border-box;
-                                        -moz-box-sizing: border-box;
-                                        box-sizing: border-box;
-                                        padding: 10px;
-                                        border-color: #e2e2e4;
-                                    }
 
-                                    #uploader .queueList{
-                                        display: block;
-                                        opacity: 1;
-                                    }
-                                </style>
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">推荐位</label>
                                     <div class="col-lg-10 radio-item">
@@ -102,13 +99,7 @@
                                         <textarea class="sum-info" name="summary" cols="160" rows="5" placeholder="摘要信息">{$proData.summary}</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">是否上架</label>
-                                    <div class="col-lg-1 radio-item">
-                                        <label><input type="radio" style="width: 20px" {if condition="$proData.status == 1"}checked{/if} class="radio form-control" value="1" name="status" /><span>上架</span></label>
-                                        <label><input type="radio" style="width: 20px" {if condition="$proData.status == 0"}checked{/if} class="radio form-control" name="status" value="0" /><span>下架</span></label>
-                                    </div>
-                                </div>
+
                                 <div class="form-group ">
                                     <label class="control-label col-lg-1">图片上传</label>
                                     <div class="col-lg-10">
@@ -127,12 +118,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-1">排序</label>
-                                    <div class="col-lg-1">
-                                        <input class=" form-control" name="reorder" type="text" value="{$proData.reorder}" />
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-1">文章编辑</label>
                                     <div class="col-lg-10">

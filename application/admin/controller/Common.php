@@ -119,4 +119,58 @@ class Common extends Controller
     }
 
 
+    // 状态
+    public function status(){
+        // 获取值
+        $data = input('param.');
+
+        // 严格检验
+        if(empty($data['id'])){
+            $this->error('id不合法');
+        }
+        if(!is_numeric($data['status'])){
+            $this->error('status不合法');
+        }
+
+        // 获取控制器
+        $model = request()->controller();
+        $result = model($model)->save([
+            'status' => $data['status']
+        ],['id'=>$data['id']]);
+
+        // 返回结果
+        if($result){
+            return json(['type'=>'success','success'=>'更新成功','code'=>0]);
+        }else{
+            return json(['type'=>'error','error'=>'更新失败','code'=>1]);
+        }
+    }
+
+    // 排序
+    public function order(){
+        // 获取值
+        $data = input('param.');
+
+        // 严格检验
+        if(empty($data['id'])){
+            $this->error('id不合法');
+        }
+        if(!is_numeric($data['order'])){
+            $this->error('order不合法');
+        }
+
+        // 获取控制器
+        $model = request()->controller();
+        $result = model($model)->save([
+            'order' => $data['order']
+        ],['id'=>$data['id']]);
+
+        // 返回结果
+        if($result){
+            return json(['type'=>'success','success'=>'更新成功','code'=>0]);
+        }else{
+            return json(['type'=>'error','error'=>'更新失败','code'=>1]);
+        }
+    }
+
 }
