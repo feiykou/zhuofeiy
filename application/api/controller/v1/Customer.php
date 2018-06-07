@@ -12,18 +12,18 @@ namespace app\api\controller\v1;
 class Customer
 {
     private function validParam(){
-        $signature = input('get.signature');
-        $timestamp = input('get.timestamp');
-        $nonce = input('get.nonce');
+        $signature = $_GET['signature'];
+        $timestamp = $_GET['timestamp'];
+        $nonce = $_GET['nonce'];
         $token = "2b21";
         $tmpArr = array($token, $timestamp, $nonce);
 
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode($tmpArr);
+        sort($tmpArr);
+        $tmpStr = implode('',$tmpArr);
 
         $tmpStr = sha1($tmpStr);
         if($tmpStr == $signature){
-            echo input('echostr');
+            echo $_GET['echostr'];
             exit;
         }
         else{
