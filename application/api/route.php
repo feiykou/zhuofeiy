@@ -10,7 +10,7 @@ use think\Route;
 // banner轮播图
 Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
 
-Route::get('api/:version/customer','api/:version.Customer/validParam');
+Route::get('api/:version/customer','api/:version.Customer/checkSignature');
 
 // 文章
 Route::get('api/:version/article','api/:version.Article/getArticle');

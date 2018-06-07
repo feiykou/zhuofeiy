@@ -11,22 +11,19 @@ namespace app\api\controller\v1;
 
 class Customer
 {
-    private function validParam(){
+    private function checkSignature(){
         $signature = $_GET['signature'];
         $timestamp = $_GET['timestamp'];
         $nonce = $_GET['nonce'];
-        $token = "2b21";
+        $token = "feiy";
         $tmpArr = array($token, $timestamp, $nonce);
 
-        sort($tmpArr);
-        $tmpStr = implode('',$tmpArr);
-
-        $tmpStr = sha1($tmpStr);
-        if($tmpStr == $signature){
-            echo $_GET['echostr'];
-            exit;
-        }
-        else{
+        sort($tmpArr, SORT_STRING);
+        $tmpStr = implode( $tmpArr );
+        $tmpStr = sha1( $tmpStr );
+        if( $tmpStr == $signature ){
+            return true;
+        }else{
             return false;
         }
     }
