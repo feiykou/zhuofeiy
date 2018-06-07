@@ -23,7 +23,8 @@ class Customer
 
         $tmpStr = sha1($tmpStr);
         if($tmpStr == $signature){
-            return true;
+            echo input('echostr');
+            exit;
         }
         else{
             return false;
