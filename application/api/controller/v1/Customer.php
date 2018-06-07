@@ -15,7 +15,7 @@ class Customer
         $signature = input('get.signature');
         $timestamp = input('get.timestamp');
         $nonce = input('get.nonce');
-        $token = "2b21d0665720fdd4509ee7fad893420a";
+        $token = "2b21d0665720fdd4509ee7fad89342";
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);
