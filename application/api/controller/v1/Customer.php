@@ -24,7 +24,8 @@ class Customer
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
-        Log::record($tmpStr);
+        Log::record($tmpStr,'error');
+        Log::record($token,'error');
         if( $tmpStr == $signature ){
             echo $_GET['echostr'];
         }else{
