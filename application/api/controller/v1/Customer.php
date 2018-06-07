@@ -12,7 +12,7 @@ use think\Log;
 
 class Customer
 {
-    private function checkSignature(){
+    public function checkSignature(){
         $signature = $_GET['signature'];
         $timestamp = $_GET['timestamp'];
         $nonce = $_GET['nonce'];
