@@ -109,4 +109,14 @@ class Token
         }
         return false;
     }
+
+    // 检测token是否存在缓存
+    public static function verifyToken($token){
+        $exit = Cache::get($token);
+        if($exit){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
