@@ -20,7 +20,7 @@ class Token
         (new TokenGet())->goCheck();
         $ut = new UserToken($code);
         $token = $ut->get();
-        var_dump($token);
+        var_dump($code);
         return [
             'token' => $token
         ];
