@@ -19,11 +19,12 @@ class Customer
         $token = "feiy";
         $tmpArr = array($token, $timestamp, $nonce);
 
-        Log::record('sadsad');
+
 
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
+        Log::record($tmpStr);
         if( $tmpStr == $signature ){
             echo $_GET['echostr'];
         }else{
