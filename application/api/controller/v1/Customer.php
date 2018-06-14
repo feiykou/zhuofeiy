@@ -12,20 +12,19 @@ use think\Log;
 
 class Customer
 {
+    /**
+     * 客服服务器验证
+     * @return bool
+     */
     public function checkSignature(){
         $signature = $_GET['signature'];
         $timestamp = $_GET['timestamp'];
         $nonce = $_GET['nonce'];
         $token = "feiy";
         $tmpArr = array($token, $timestamp, $nonce);
-
-
-
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
-        Log::record($tmpStr,'error');
-        Log::record($token,'error');
         if( $tmpStr == $signature ){
             echo $_GET['echostr'];
         }else{
