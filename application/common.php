@@ -118,6 +118,50 @@ function curl_post($url, array $params = array())
     return ($data);
 }
 
+function curl_post_img($url, array $params = array())
+{
+    $ch = curl_init();
+    // 请求地址
+    curl_setopt($ch, CURLOPT_URL, $url);
+    // 请求参数类型
+    $param = json_encode($params);
+    // 关闭https验证
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    // post提交
+    if($param){
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+    }
+    // 返回的数据是否自动显示
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // 执行并接收响应结果
+    $output = curl_exec($ch);
+    // 关闭curl
+    curl_close($ch);
+    return $output !== false ? $output : false;
+//    $data_string = json_encode($params);
+//    $ch = curl_init();
+//    $header = array('Accept-Charset: utf-8');
+//    curl_setopt($ch, CURLOPT_URL, $url);
+//    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+//    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+//    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+//    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+//    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+//    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+//    curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+//    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//    $tmpInfo = curl_exec($ch);
+//    if (curl_errno($ch)) {
+//        return false;
+//    }else{
+//        return $tmpInfo;
+//    }
+
+}
+
 function curl_post_raw($url, $rawData)
 {
     $ch = curl_init();

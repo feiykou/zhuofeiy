@@ -51,3 +51,6 @@ Route::get('api/:version/order/by_user','api/:version.Order/getSummaryByUser');
 Route::post('api/:version/pay/pre_order','api/:version.Pay/getPreOrder');
 // 给微信定义的回调API
 Route::post('api/:version/pay/notify','api/:version.Pay/receiveNotify');
+
+Route::post('api/:version/wxacode','api/:version.Wxacode/getaCode');
+

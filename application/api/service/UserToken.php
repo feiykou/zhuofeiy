@@ -98,7 +98,6 @@ class UserToken extends Token
      * @return id     返回id
      */
     private function newUser($openid){
-
        $user = AppUserModel::create([
             'openid' => $openid
         ]);
