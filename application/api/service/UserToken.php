@@ -113,7 +113,6 @@ class UserToken extends Token
      * @throws WeChatException   微信错误异常处理
      */
     private function processLoginError($wxResult){
-        var_dump(111);
         throw new WeChatException([
             'msg'         =>    $wxResult['errmsg'],
             'errorCode'   =>    $wxResult['errcode']
